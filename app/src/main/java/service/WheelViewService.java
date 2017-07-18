@@ -9,22 +9,22 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
-import android.os.Binder;
 import android.os.IBinder;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.lukedeighton.wheelview.WheelView;
 import com.lukedeighton.wheelview.adapter.WheelAdapter;
 
 import capture.ScreenCaptureActivity;
 import capture.ScreenRecordActivity;
 import nts.nt3.atm.ATMApplication;
+import nts.nt3.atm.MainActivity;
 import nts.nt3.atm.R;
 
 /**
@@ -177,7 +177,10 @@ public class WheelViewService extends Service implements Wheelable{
     //go to home
     @Override
     public void startHome(){
-        Toast.makeText(getApplicationContext(), "startHome", Toast.LENGTH_SHORT).show();
+        stopService(new Intent(getApplicationContext(), WheelViewService.class));
+        Intent intent_home = new Intent(getApplicationContext(), MainActivity.class);
+        intent_home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent_home);
     }
     //auto
     @Override
