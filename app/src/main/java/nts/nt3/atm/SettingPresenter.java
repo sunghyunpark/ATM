@@ -9,7 +9,7 @@ import realm.model.User;
 import service.NdeployAlarmService;
 
 /**
- * Created by MacBookPro13 on 2017. 7. 13..
+ * Created by Sunghyun on 2017. 7. 13..
  */
 
 public class SettingPresenter implements SettingInterface {

@@ -1,11 +1,7 @@
 package capture;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-
 /**
- * Created by MacBookPro13 on 2017. 7. 12..
+ * Created by Sunghyun on 2017. 7. 12..
  */
 
 public interface CaptureEditable {

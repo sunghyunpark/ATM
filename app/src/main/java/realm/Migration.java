@@ -9,7 +9,7 @@ import io.realm.RealmObjectSchema;
 import io.realm.RealmSchema;
 
 /**
- * Created by MacBookPro13 on 2017. 7. 13..
+ * Created by Sunghyun on 2017. 7. 13..
  */
 
 public class Migration implements RealmMigration {

@@ -1,7 +1,6 @@
 package capture;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +13,7 @@ import util.EmailClient;
 import util.GmailAddress;
 
 /**
- * Created by MacBookPro13 on 2017. 7. 12..
+ * Created by Sunghyun on 2017. 7. 12..
  */
 
 public class EditCapturePresenter implements CaptureEditable {

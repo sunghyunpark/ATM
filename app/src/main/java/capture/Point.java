@@ -3,7 +3,7 @@ package capture;
 import java.io.Serializable;
 
 /**
- * Created by MacBookPro13 on 2017. 7. 12..
+ * Created by Sunghyun on 2017. 7. 12..
  */
 
 public class Point implements Serializable {

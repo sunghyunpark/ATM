@@ -6,7 +6,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 /**
- * Created by MacBookPro13 on 2017. 7. 13..
+ * Created by Sunghyun on 2017. 7. 13..
  */
 
 public class RealmConfig{

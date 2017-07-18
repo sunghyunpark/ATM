@@ -3,7 +3,7 @@ package nts.nt3.atm;
 import android.app.Application;
 
 /**
- * Created by MacBookPro13 on 2017. 7. 12..
+ * Created by Sunghyun on 2017. 7. 12..
  */
 
 public class ATMApplication extends Application {
