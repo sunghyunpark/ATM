@@ -26,6 +26,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import nts.nt3.atm.R;
 
@@ -34,7 +36,7 @@ import nts.nt3.atm.R;
  */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class ScreenRecordActivity extends Activity {
-    private static final String TAG = "ScreenRecord";
+    private static final String TAG = "ScreenRecordActivity";
     private static final int REQUEST_CODE = 1000;
     private int mScreenDensity;
     private MediaProjectionManager mProjectionManager;
@@ -152,17 +154,16 @@ public class ScreenRecordActivity extends Activity {
              * 15 -> 중화질
              * 30 -> 저화질 로 적용했었음.
              */
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
             mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mMediaRecorder.setOutputFile(Environment
-                    .getExternalStoragePublicDirectory(Environment
-                            .DIRECTORY_DOWNLOADS) + "/video.mp4");
+            mMediaRecorder.setOutputFile(Environment.getExternalStorageDirectory() + "/ATM/" + timeStamp+"_video.mp4");
             mMediaRecorder.setVideoSize(DISPLAY_WIDTH, DISPLAY_HEIGHT);
             mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
             mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             mMediaRecorder.setVideoEncodingBitRate(512 * 1000);
-            mMediaRecorder.setVideoFrameRate(10);
+            mMediaRecorder.setVideoFrameRate(30);
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
             int orientation = ORIENTATIONS.get(rotation + 90);
             mMediaRecorder.setOrientationHint(orientation);
@@ -222,7 +223,6 @@ public class ScreenRecordActivity extends Activity {
                     onToggleScreenShare(mToggleButton);
                 } else {
                     mToggleButton.setChecked(false);
-
                 }
                 return;
             }
