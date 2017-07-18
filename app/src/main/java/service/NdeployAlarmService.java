@@ -10,7 +10,6 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.HTMLElementName;
@@ -127,8 +126,6 @@ public class NdeployAlarmService extends Service {
     }
 
     private void ParsingTimer(final String url){
-
-        Log.d("ndeploy", "url not null");
         if(mTask == null){
             mTask = new TimerTask() {
 
@@ -145,13 +142,10 @@ public class NdeployAlarmService extends Service {
                                 Log.d("ndeploy", "after : "+af_time);
                             }else if(!be_time.equals("") && !af_time.equals(be_time)){
                                 //새로 파싱해온값과 그 전 값이 다른 경우 -> 알림 작동
-                                //update_flag = false;    //이거때문에 알림이 작동함과 동시에 알리미 감시 중단됨.
                                 Log.d("ndeploy", "before : "+be_time);
                                 Log.d("ndeploy", "after : "+af_time);
                                 setNotification(url);
                                 be_time = af_time;
-                                //mTimer.cancel();      //이거 때문에 알림이 작동함과 동시에 알리미 감시 중단됨
-                                //mTimer = null;        //이거 때문에 알림이 작동함과 동시에 알리미 감시 중단됨
                             }else{
                                 //값이 다르지 않은 경우
                                 be_time = af_time;
