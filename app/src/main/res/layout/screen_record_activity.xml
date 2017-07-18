@@ -2,30 +2,154 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:background="#FFFFFF">
 
+    <RelativeLayout
+        android:id="@+id/title_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:background="#ffffff"
+        android:orientation="horizontal" >
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/back_btn_black"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/title_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/screen_record_title_txt"
+            android:textSize="18dp"
+            android:textColor="#000000" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        <ToggleButton
+            android:id="@+id/toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:textOff="@string/screen_record_start_txt"
+            android:textOn="@string/screed_record_stop_txt"/>
+
+    </RelativeLayout>
+    <!--구분선-->
+    <LinearLayout
+        android:id="@+id/divider_lay"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/title_bar"
+        android:background="#ffe0e0e0"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/state_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="Recording Status: "
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:orientation="vertical"
+        android:layout_below="@+id/divider_lay">
 
-    <ToggleButton
-        android:id="@+id/toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Start"/>
+        <RelativeLayout
+            android:id="@+id/record_state_high_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:text="@string/screen_record_state_high_txt"/>
+
+            <ImageView
+                android:id="@+id/high_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/checked_img"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"/>
+        </RelativeLayout>
+
+        <!--구분선-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:orientation="horizontal"
+            android:background="#ffe0e0e0"></LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/record_state_mid_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:text="@string/screen_record_state_mid_txt"/>
+
+            <ImageView
+                android:id="@+id/mid_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/checked_img"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"/>
+        </RelativeLayout>
+
+        <!--구분선-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:orientation="horizontal"
+            android:background="#ffe0e0e0"></LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/record_state_low_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:text="@string/screen_record_state_low_txt"/>
+
+            <ImageView
+                android:id="@+id/low_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/checked_img"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"/>
+        </RelativeLayout>
+
+        <!--구분선-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:orientation="horizontal"
+            android:background="#ffe0e0e0"></LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

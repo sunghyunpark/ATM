@@ -68,4 +68,12 @@
     <string name="timer_saving_info">일정 시간동안 로그를 저장하시려면 초 단위의 시간을 입력해 주세요.</string>
     <string name="timer_error_text">저장 시간을 다시 확인해 주세요.</string>
 
+    <!--ScreenRecord-->
+    <string name="screen_record_title_txt">녹화</string>
+    <string name="screen_record_state_high_txt">고화질</string>
+    <string name="screen_record_state_mid_txt">중화질</string>
+    <string name="screen_record_state_low_txt">저화질</string>
+    <string name="screen_record_start_txt">녹화 시작</string>
+    <string name="screed_record_stop_txt">녹화 중지</string>
+
 </resources>
