@@ -38,7 +38,6 @@ public class WheelViewService extends Service implements Wheelable{
     private TextView wheel_item_txt;
     //onTopService view
     private WindowManager mWindowManager;                   //윈도우 매니저
-    ATMApplication atmApplication;
 
 
     @Override
@@ -49,9 +48,6 @@ public class WheelViewService extends Service implements Wheelable{
     @Override
     public void onCreate() {
         super.onCreate();
-
-        atmApplication = (ATMApplication)getApplicationContext();
-
         InitView();
     }
 
@@ -153,7 +149,7 @@ public class WheelViewService extends Service implements Wheelable{
     //record
     @Override
     public void startRecord(){
-        atmApplication.setRecordState(true);
+        ATMApplication.recordState = true;
         stopService();
         Intent intent = new Intent(getApplicationContext(), ScreenRecordActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -8,15 +8,7 @@ import android.app.Application;
 
 public class ATMApplication extends Application {
 
-    private boolean recordState = false;
-
-    public boolean isRecordState() {
-        return recordState;
-    }
-
-    public void setRecordState(boolean recordState) {
-        this.recordState = recordState;
-    }
+    public static boolean recordState = false;
 
     @Override
     public void onCreate(){
