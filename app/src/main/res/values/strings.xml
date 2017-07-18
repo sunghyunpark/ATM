@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">ATM</string>
+    <!--홈 화면-->
+    <string name="home_app_full_title_txt">(Android Test Manager)</string>
+    <string name="home_start_btn">START</string>
+    <string name="home_logcat_btn">로그캣</string>
+    <string name="home_app_manager_btn">앱 관리</string>
+    <string name="home_setting_btn">설정</string>
+    <string name="home_help_btn">도움말</string>
+    <string name="home_by_made_txt">by NT3</string>
+
+    <!--Wheel view item-->
+    <string name="wheel_view_item1">캡쳐</string>
+    <string name="wheel_view_item2">녹화</string>
+    <string name="wheel_view_item3">메모</string>
+    <string name="wheel_view_item4">로그캣</string>
+    <string name="wheel_view_item5">앱관리</string>
+    <string name="wheel_view_item6">홈</string>
+    <string name="wheel_view_item7">AUTO</string>
+    <string name="wheel_view_item8">숨기기</string>
+
+    <!--Edit Capture Activity-->
+    <string name="edit_capture_title_txt">캡쳐</string>
+    <string name="edit_capture_send_btn_txt">전송</string>
+
+    <!--Setting Activity-->
+    <string name="setting_activity_title_txt">설정</string>
+    <string name="setting_activity_user_email_title">계정</string>
+    <string name="setting_activity_user_email_subtext">탭해서 메일을 등록하면 캡쳐, 녹화, Logcat 데이터를 받을 수 있습니다.</string>
+    <string name="setting_activity_alarm_title">알림</string>
+    <string name="setting_activity_alarm_ndeploy">Ndeploy에서 최신 빌드가 업로드되면 알림을 받습니다.</string>
+    <string name="setting_activity_alarm_crash">Crash 발생 시 알림 및 메일을 받습니다.</string>
+    <string name="setting_activity_alarm_subtext">등록된 메일이 있는 경우 자동으로 메일 전송이 됩니다\n만약 없는 경우에는 ATM폴더에 저장됩니다.</string>
+    <string name="setting_activity_record_state_title">녹화</string>
+    <string name="setting_activity_record_state_txt">녹화 화질 상태</string>
+
+    <!--Insert Email Dialog-->
+    <string name="insert_email_dialog_title">메일 입력</string>
+    <string name="insert_email_dialog_subtext">캡쳐, 녹화, Logcat 파일을 받고자 하는 메일을 입력해주세요.</string>
+
+    <!--error toast-->
+    <string name="not_exist_info_txt">정보를 입력해주세요.</string>
+    <string name="not_email_format_txt">올바른 이메일 형식이 아닙니다.</string>
+
+    <!--Ndeploy Alarm -->
+    <string name="ndeploy_alarm_push_title">최신 빌드</string>
+    <string name="ndeploy_alarm_push_txt1">최신 빌드가 업로드 되었습니다</string>
+    <string name="ndeploy_alarm_push_txt2">최신 빌드 확인하러가기</string>
+    <string name="ndeploy_alarm_running_txt1">Ndeploy 최신 빌드 확인중</string>
+    <string name="ndeploy_alarm_running_txt2">최신 빌드 업로드 확인중</string>
+    <string name="ndeploy_alarm_dialog_title">Ndeploy URL</string>
+    <string name="ndeploy_alarm_dialog_txt">Ndeploy URL을 입력해주세요.</string>
+
+    <!--LogCat-->
+    <string name="filter_menu">필터 (%s)</string>
+    <string name="filter_menu_empty">필터</string>
+    <string name="saving_log">로그를 저장합니다: %s, 기다려주세요</string>
+    <string name="sel_level">로그 레벨 선택</string>
+    <string name="sel_type">로그 타입 선택</string>
+    <string name="sel_format">로그 포맷 선택</string>
+    <string name="sum_level">로그의 레벨을 선택합니다.</string>
+    <string name="sum_format">로그의 포맷을 선택합니다.</string>
+    <string name="sum_type">로그의 타입을 선택합니다.</string>
+    <string name="log_prefs_title">Log Display</string>
+    <string name="filter_dialog_text">로그를 필터링 할 문자열을 적어주세요.</string>
+    <string name="pattern_error_text">알 수 없는 정규식입니다.</string>
+    <string name="apply_as_regexp">정규식을 적용할까요?</string>
+    <string name="timer_saving_info">일정 시간동안 로그를 저장하시려면 초 단위의 시간을 입력해 주세요.</string>
+    <string name="timer_error_text">저장 시간을 다시 확인해 주세요.</string>
+
+</resources>
