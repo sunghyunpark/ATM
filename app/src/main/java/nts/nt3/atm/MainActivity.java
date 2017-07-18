@@ -20,9 +20,6 @@ import realm.RealmConfig;
 import realm.model.User;
 import service.WheelViewService;
 
-/**
- * git test
- */
 public class MainActivity extends AppCompatActivity {
 
     @Override
