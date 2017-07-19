@@ -1,9 +1,6 @@
 package capture;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -11,7 +8,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import nts.nt3.atm.R;
-import service.WheelViewService;
+import util.MailPresenter;
 
 /**
  * ScreenCaptureActivity로부터 캡쳐 이미지의 로컬 경로를 받아옴.
@@ -38,7 +34,7 @@ public class EditCaptureActivity extends AppCompatActivity {
     private Bitmap captureBit;
     private String ImgFullPath;
     private boolean DRAW_MODE = false;
-    private EditCapturePresenter editCapturePresenter;
+    private MailPresenter mailPresenter;
     public static ViewGroup title_bar;
 
     @Override
@@ -51,7 +47,7 @@ public class EditCaptureActivity extends AppCompatActivity {
         Intent intent = getIntent();
         ImgFullPath = intent.getExtras().getString("ImgFullPath");    //로컬에 저장된 이미지 경로
 
-        editCapturePresenter = new EditCapturePresenter(getApplicationContext());
+        mailPresenter = new MailPresenter(getApplicationContext());
 
         InitView(ImgFullPath);
     }
@@ -141,14 +137,15 @@ public class EditCaptureActivity extends AppCompatActivity {
                     case R.id.draw_btn:    //그리기 모드
                         DRAW_MODE = true;
                         DrawView drawView = (DrawView)findViewById(R.id.drawView);
-                        editCapturePresenter.DrawPen(drawView);
+                        //editCapturePresenter.DrawPen(drawView);
+                        drawView.setVisibility(View.VISIBLE);
                         break;
                     case R.id.send_btn:    //보내기
                         if(DRAW_MODE){
                             //그리기 모드
-                            editCapturePresenter.SendBtn(takeScreenshot());
+                            mailPresenter.SendBtn(takeScreenshot());
                         }else{
-                            editCapturePresenter.SendBtn(ImgFullPath);
+                            mailPresenter.SendBtn(ImgFullPath);
                         }
                         finish();
                         break;

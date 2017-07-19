@@ -1,35 +1,29 @@
-package capture;
+package util;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import io.realm.Realm;
 import realm.RealmConfig;
 import realm.model.User;
-import util.EmailClient;
-import util.GmailAddress;
 
 /**
  * Created by Sunghyun on 2017. 7. 12..
+ * ATM내에서 메일 보내는 동작은 모두 여기서 하도록함.
  */
 
-public class EditCapturePresenter implements CaptureEditable {
+public class MailPresenter implements Mailable {
 
     Context context;
 
-    public EditCapturePresenter(Context context){
+    public MailPresenter(Context context){
         this.context = context;
     }
 
     @Override
-    public void DrawPen(DrawView drawable){
-        drawable.setVisibility(View.VISIBLE);
-    }
-    @Override
-    public void SendBtn(String ImgPath){
+    public void SendBtn(String FilePath){
 
         RealmConfig realmConfig = new RealmConfig();
         Realm mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(context));
@@ -38,7 +32,7 @@ public class EditCapturePresenter implements CaptureEditable {
 
         EmailInfo emailInfo = new EmailInfo();
         emailInfo.setUserEmail(user_db.getEmail());
-        emailInfo.setImgPath(ImgPath);
+        emailInfo.setFilePath(FilePath);
 
         SendEmailTask sendEmailTask = new SendEmailTask();
         sendEmailTask.execute(emailInfo);
@@ -54,7 +48,7 @@ public class EditCapturePresenter implements CaptureEditable {
         @Override
         protected String doInBackground(EmailInfo... data){
             String user_email = data[0].getUserEmail();
-            String path = data[0].getImgPath();
+            String path = data[0].getFilePath();
 
             if (this.isCancelled()) {
                 // 비동기작업을 cancel해도 자동으로 취소해주지 않으므로,

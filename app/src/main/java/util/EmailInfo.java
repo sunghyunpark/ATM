@@ -1,11 +1,12 @@
-package capture;
+package util;
 
 /**
  * Created by Sunghyun on 2017. 7. 12..
+ * Email 정보
  */
 
 public class EmailInfo {
-    String ImgPath;
+    String FilePath;
     String userEmail;
 
     public String getUserEmail() {
@@ -16,11 +17,12 @@ public class EmailInfo {
         this.userEmail = userEmail;
     }
 
-    public String getImgPath() {
-        return ImgPath;
+    public String getFilePath() {
+        return FilePath;
     }
 
-    public void setImgPath(String imgPath) {
-        ImgPath = imgPath;
+    public void setFilePath(String filePath) {
+        FilePath = filePath;
     }
+
 }

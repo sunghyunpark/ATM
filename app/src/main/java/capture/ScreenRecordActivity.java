@@ -134,6 +134,8 @@ public class ScreenRecordActivity extends AppCompatActivity {
         ViewGroup record_state_high_btn = (ViewGroup)findViewById(R.id.record_state_high_btn);
         ViewGroup record_state_mid_btn = (ViewGroup)findViewById(R.id.record_state_mid_btn);
         ViewGroup record_state_low_btn = (ViewGroup)findViewById(R.id.record_state_low_btn);
+        ImageView back_btn = (ImageView)findViewById(R.id.back_btn);
+        back_btn.setOnTouchListener(myOnTouchListener);
 
         high_btn = (ImageView)findViewById(R.id.high_btn);
         mid_btn = (ImageView)findViewById(R.id.mid_btn);
@@ -354,7 +356,11 @@ public class ScreenRecordActivity extends AppCompatActivity {
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 v.setAlpha(1.0f);
                 switch(v.getId()){
-                    
+
+                    case R.id.back_btn:
+                        finish();
+                        break;
+
                 }
             }
             return true;
