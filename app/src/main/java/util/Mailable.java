@@ -5,5 +5,5 @@ package util;
  */
 
 public interface Mailable {
-    public void SendBtn(String FilePath);
+    public void SendBtn(String type, String FilePath);
 }

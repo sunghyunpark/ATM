@@ -6,8 +6,17 @@ package util;
  */
 
 public class EmailInfo {
-    String FilePath;
-    String userEmail;
+    private String mailType;
+    private String FilePath;
+    private String userEmail;
+
+    public String getMailType() {
+        return mailType;
+    }
+
+    public void setMailType(String mailType) {
+        this.mailType = mailType;
+    }
 
     public String getUserEmail() {
         return userEmail;

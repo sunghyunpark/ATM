@@ -143,9 +143,9 @@ public class EditCaptureActivity extends AppCompatActivity {
                     case R.id.send_btn:    //보내기
                         if(DRAW_MODE){
                             //그리기 모드
-                            mailPresenter.SendBtn(takeScreenshot());
+                            mailPresenter.SendBtn("capture", takeScreenshot());
                         }else{
-                            mailPresenter.SendBtn(ImgFullPath);
+                            mailPresenter.SendBtn("capture", ImgFullPath);
                         }
                         finish();
                         break;

@@ -23,7 +23,7 @@ public class MailPresenter implements Mailable {
     }
 
     @Override
-    public void SendBtn(String FilePath){
+    public void SendBtn(String type, String FilePath){
 
         RealmConfig realmConfig = new RealmConfig();
         Realm mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(context));
@@ -31,6 +31,7 @@ public class MailPresenter implements Mailable {
         User user_db = mRealm.where(User.class).equalTo("no",1).findFirst();
 
         EmailInfo emailInfo = new EmailInfo();
+        emailInfo.setMailType(type);
         emailInfo.setUserEmail(user_db.getEmail());
         emailInfo.setFilePath(FilePath);
 
@@ -47,8 +48,21 @@ public class MailPresenter implements Mailable {
 
         @Override
         protected String doInBackground(EmailInfo... data){
+            /**
+             * mailType
+             * capture / record / log
+             */
+            String mailType = data[0].getMailType();
             String user_email = data[0].getUserEmail();
             String path = data[0].getFilePath();
+            String mailTitle = "";
+            if(mailType.equals("capture")){
+                mailTitle = "ATM_CAPTURE";
+            }else if(mailType.equals("record")){
+                mailTitle = "ATM_RECORD";
+            }else if(mailType.equals("log")){
+                mailTitle = "ATM_CRASH_LOG";
+            }
 
             if (this.isCancelled()) {
                 // 비동기작업을 cancel해도 자동으로 취소해주지 않으므로,
@@ -63,7 +77,7 @@ public class MailPresenter implements Mailable {
                 {
                     EmailClient email = new EmailClient(gmail,
                             "qalab123");
-                    email.sendMailWithFile(context,"capture","ATM_CAPTURE", "test",
+                    email.sendMailWithFile(context,"capture",mailTitle, "test",
                             gmail, user_email,
                             path, "atm_capture.png");
 

@@ -4,10 +4,12 @@ package capture;
  * Created by NAVER on 2017-07-06.
  */
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.PixelFormat;
@@ -21,11 +23,14 @@ import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.OrientationEventListener;
 import android.view.Window;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,6 +44,7 @@ import nts.nt3.atm.R;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class ScreenCaptureActivity extends Activity {
 
+    private static final int REQUEST_PERMISSIONS = 10;
     private static final String TAG = ScreenCaptureActivity.class.getName();
     private static final int REQUEST_CODE = 100;
     private static String STORE_DIRECTORY;
@@ -156,8 +162,34 @@ public class ScreenCaptureActivity extends Activity {
         setContentView(R.layout.screen_capture_activity);
 
         // call for the projection manager
-        mProjectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
-        startProjection();
+        if (mProjectionManager == null){
+            mProjectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+
+            if (ContextCompat.checkSelfPermission(ScreenCaptureActivity.this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) + ContextCompat
+                    .checkSelfPermission(ScreenCaptureActivity.this,
+                            Manifest.permission.RECORD_AUDIO)
+                    != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale
+                        (ScreenCaptureActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                        ActivityCompat.shouldShowRequestPermissionRationale
+                                (ScreenCaptureActivity.this, Manifest.permission.RECORD_AUDIO)) {
+
+                    ActivityCompat.requestPermissions(ScreenCaptureActivity.this,
+                            new String[]{Manifest.permission
+                                    .WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO},
+                            REQUEST_PERMISSIONS);
+                } else {
+                    ActivityCompat.requestPermissions(ScreenCaptureActivity.this,
+                            new String[]{Manifest.permission
+                                    .WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO},
+                            REQUEST_PERMISSIONS);
+
+                }
+            } else {
+                startProjection();
+            }
+        }
 
     }
 
@@ -198,7 +230,7 @@ public class ScreenCaptureActivity extends Activity {
                 }
 
                 // register media projection stop callback
-                sMediaProjection.registerCallback(new MediaProjectionStopCallback(), null);
+                //sMediaProjection.registerCallback(new MediaProjectionStopCallback(), null); <- 이유는 모르겠지만 이거때문에 노트5(6.0.1)에서 캡쳐 동작안됬음.
             }
             stopProjection();
         }
@@ -229,5 +261,24 @@ public class ScreenCaptureActivity extends Activity {
         mImageReader = ImageReader.newInstance(mWidth, mHeight, PixelFormat.RGBA_8888, 2);
         mVirtualDisplay = sMediaProjection.createVirtualDisplay(SCREENCAP_NAME, mWidth, mHeight, mDensity, VIRTUAL_DISPLAY_FLAGS, mImageReader.getSurface(), null, null);
         mImageReader.setOnImageAvailableListener(new ImageAvailableListener(), null);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSIONS:
+
+                //권한이 있는 경우
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    startProjection();
+                }
+                //권한이 없는 경우
+                else {
+                    finish();
+                    Toast.makeText(this, "퍼미션을 허용해야 이용할 수 있습니다.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 }

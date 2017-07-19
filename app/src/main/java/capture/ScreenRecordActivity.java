@@ -36,6 +36,7 @@ import io.realm.Realm;
 import nts.nt3.atm.R;
 import realm.RealmConfig;
 import realm.model.User;
+import util.MailPresenter;
 
 /**
  * Created by Sunghyun on 2017. 7. 7..
@@ -56,6 +57,7 @@ public class ScreenRecordActivity extends AppCompatActivity {
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static final int REQUEST_PERMISSIONS = 10;
 
+    private String filePath;
     private int recordLevel;
     Realm mRealm;
     RealmConfig realmConfig;
@@ -224,6 +226,11 @@ public class ScreenRecordActivity extends AppCompatActivity {
             mMediaRecorder.reset();
             Log.v(TAG, "Stopping Recording");
             stopScreenSharing();
+
+            //메일링
+            MailPresenter mailPresenter = new MailPresenter(getApplicationContext());
+            mailPresenter.SendBtn("record", filePath);
+            finish();
         }
     }
 
@@ -267,10 +274,11 @@ public class ScreenRecordActivity extends AppCompatActivity {
                 rate = 30;
             }
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            filePath = Environment.getExternalStorageDirectory() + "/ATM/" + timeStamp+"_video.mp4";
             mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
             mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mMediaRecorder.setOutputFile(Environment.getExternalStorageDirectory() + "/ATM/" + timeStamp+"_video.mp4");
+            mMediaRecorder.setOutputFile(filePath);
             mMediaRecorder.setVideoSize(DISPLAY_WIDTH, DISPLAY_HEIGHT);
             mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
             mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
