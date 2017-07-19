@@ -110,7 +110,8 @@ public class EmailClient
                     +telephony.getSimCountryIso()+"\n"+telephony.getSubscriberId()+"\n"+telephony.getVoiceMailAlphaTag()+"\n"+telephony.getVoiceMailNumber()+"\n"+telephony.isNetworkRoaming()+"\n"+telephony.hasIccCard()+"\n"
                     +telephony.hashCode()+"\n"+telephony.toString()+"\n");
                     */
-            messageBodyPart.setText("[단말기 정보]\n제조사:"+ Build.MANUFACTURER+"\n"+"모델명:"+android.os.Build.MODEL+"\n"+"OS 버전:"+android.os.Build.VERSION.RELEASE);
+            messageBodyPart.setText("[단말기 정보]\n제조사:"+ Build.MANUFACTURER+"\n"+"모델명:"+android.os.Build.MODEL+"\n"+"OS 버전:"+android.os.Build.VERSION.RELEASE+"\n"+"빌드번호 : "+Build.DISPLAY);
+
             multipart.addBodyPart(messageBodyPart);
 
             if(type.equals("logcat")){
