@@ -11,7 +11,8 @@ import realm.model.User;
 
 /**
  * Created by Sunghyun on 2017. 7. 12..
- * ATM내에서 메일 보내는 동작은 모두 여기서 하도록함.
+ * ATM 내에서 메일 보내는 동작은 모두 여기서 하도록함.
+ * mailType -> capture / record / log
  */
 
 public class MailPresenter implements Mailable {
@@ -48,10 +49,6 @@ public class MailPresenter implements Mailable {
 
         @Override
         protected String doInBackground(EmailInfo... data){
-            /**
-             * mailType
-             * capture / record / log
-             */
             String mailType = data[0].getMailType();
             String user_email = data[0].getUserEmail();
             String path = data[0].getFilePath();

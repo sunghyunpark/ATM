@@ -66,7 +66,7 @@ public class NdeployAlarmService extends Service {
         Resources res = getResources();
         //타이머를 계속 사용해야해서 노티피케이션을 등록해줌 -> 아이콘은 뺄수있음.
         Notification.Builder builder = new Notification.Builder(getApplicationContext())
-                .setSmallIcon(R.mipmap.app_icon)
+                .setSmallIcon(R.mipmap.search_apk_img)
                 .setContentTitle(res.getString(R.string.ndeploy_alarm_running_txt1))
                 .setContentText(res.getString(R.string.ndeploy_alarm_running_txt2))
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
@@ -115,7 +115,7 @@ public class NdeployAlarmService extends Service {
 
         Notification.Builder builder = new Notification.Builder(getApplicationContext())
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.mipmap.app_icon)
+                .setSmallIcon(R.mipmap.new_apk_img)
                 .setContentTitle(res.getString(R.string.ndeploy_alarm_push_title))
                 .setContentText(res.getString(R.string.ndeploy_alarm_push_txt1))
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
