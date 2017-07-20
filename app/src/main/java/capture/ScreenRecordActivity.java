@@ -250,6 +250,7 @@ public class ScreenRecordActivity extends AppCompatActivity {
         intent.addCategory(Intent.CATEGORY_HOME);   //홈화면 표시
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //새로운 태스크를 생성하여 그 태스크안에서 액티비티 추가
         startActivity(intent);
+
         return mMediaProjection.createVirtualDisplay("ScreenRecordActivity",
                 DISPLAY_WIDTH, DISPLAY_HEIGHT, mScreenDensity,
                 DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,

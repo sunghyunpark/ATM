@@ -91,7 +91,11 @@ public class WheelViewService extends Service implements Wheelable{
                         drawable = getResources().getDrawable(R.mipmap.wheel_icon1);
                         break;
                     case 1:
-                        drawable = getResources().getDrawable(R.mipmap.wheel_icon2);
+                        if(ATMApplication.recordState){
+                            drawable = getResources().getDrawable(R.mipmap.wheel_icon2_2);
+                        }else{
+                            drawable = getResources().getDrawable(R.mipmap.wheel_icon2);
+                        }
                         break;
                     case 2:
                         drawable = getResources().getDrawable(R.mipmap.wheel_icon3);
