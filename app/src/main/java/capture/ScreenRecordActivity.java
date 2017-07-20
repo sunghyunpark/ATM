@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.realm.Realm;
+import nts.nt3.atm.ATMApplication;
 import nts.nt3.atm.R;
 import realm.RealmConfig;
 import realm.model.User;
@@ -222,6 +223,7 @@ public class ScreenRecordActivity extends AppCompatActivity {
             initRecorder();
             shareScreen();
         } else {
+            ATMApplication.recordState = false;
             mMediaRecorder.stop();
             mMediaRecorder.reset();
             Log.v(TAG, "Stopping Recording");
