@@ -1,5 +1,6 @@
 package nts.nt3.atm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -31,6 +32,8 @@ public class ApkMangerActivity extends AppCompatActivity {
         final Button settingBtn = (Button)findViewById(R.id.setting_btn);
         ImageView backBtn = (ImageView)findViewById(R.id.back_btn);
         backBtn.setOnTouchListener(myOnTouchListener);
+        ImageView addUrlBtn = (ImageView)findViewById(R.id.add_url_btn);
+        addUrlBtn.setOnTouchListener(myOnTouchListener);
 
         //뷰페이저
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -152,6 +155,11 @@ public class ApkMangerActivity extends AppCompatActivity {
 
                     case R.id.back_btn:
                         finish();
+                        break;
+
+                    case R.id.add_url_btn:
+                        Intent intent = new Intent(getApplicationContext(), WriteDownLoadLinkActivity.class);
+                        startActivity(intent);
                         break;
                 }
             }
