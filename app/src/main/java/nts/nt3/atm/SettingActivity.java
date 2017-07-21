@@ -6,9 +6,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 import realm.RealmConfig;
 import realm.model.User;
 import service.NdeployAlarmService;
@@ -58,6 +56,25 @@ public class SettingActivity extends AppCompatActivity {
 
         user_email_txt = (TextView)findViewById(R.id.user_email_txt);
         user_email_txt.setText(user_db.getEmail());
+
+        //편집없이 캡쳐 전송 스위치
+        final Switch CaptureWithoutEditSwitch = (Switch)findViewById(R.id.send_capture_without_edit_switch);
+        if(user_db.isSend_capture_without_edit()){
+            CaptureWithoutEditSwitch.setChecked(true);
+        }else {
+            CaptureWithoutEditSwitch.setChecked(false);
+        }
+        CaptureWithoutEditSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingPresenter settingPresenter = new SettingPresenter(getApplicationContext());
+                if(isChecked){
+                    settingPresenter.ChangeCaptureSetting(true);
+                }else{
+                    settingPresenter.ChangeCaptureSetting(false);
+                }
+            }
+        });
 
         final Switch NdeploySwitch = (Switch)findViewById(R.id.ndeploy_switch);
         if(Ndeploy_AlarmRunningCheck()){

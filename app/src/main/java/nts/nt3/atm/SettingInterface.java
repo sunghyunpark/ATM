@@ -10,5 +10,6 @@ public interface SettingInterface {
     public void InsertEmail(String email);
     public void AlarmNdeploy(String url);
     public void AlarmCrash();
-    public void SelectRecordState();
+    public void ChangeCaptureSetting(boolean flag);
+
 }

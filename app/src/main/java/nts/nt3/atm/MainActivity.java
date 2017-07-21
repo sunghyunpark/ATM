@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             mRealm.beginTransaction();
             User userData = new User();
             userData.setNo(1);
+            userData.setSend_capture_without_edit(false);
 
             mRealm.copyToRealmOrUpdate(userData);
             mRealm.commitTransaction();

@@ -135,6 +135,7 @@ public class ScreenRecordActivity extends AppCompatActivity {
         mid_btn = (ImageView)findViewById(R.id.mid_btn);
         low_btn = (ImageView)findViewById(R.id.low_btn);
 
+        //기본값을 중화질로 설정
         recordLevel = 2;
         InitState(recordLevel);
 
@@ -165,7 +166,6 @@ public class ScreenRecordActivity extends AppCompatActivity {
     }
 
     private void InitState(int level){
-
         if(level == 1){
             high_btn.setVisibility(View.VISIBLE);
             mid_btn.setVisibility(View.GONE);
@@ -348,11 +348,9 @@ public class ScreenRecordActivity extends AppCompatActivity {
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 v.setAlpha(1.0f);
                 switch(v.getId()){
-
                     case R.id.back_btn:
                         finish();
                         break;
-
                 }
             }
             return true;

@@ -39,7 +39,11 @@ import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.realm.Realm;
 import nts.nt3.atm.R;
+import realm.RealmConfig;
+import realm.model.User;
+import util.MailPresenter;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class ScreenCaptureActivity extends Activity {
@@ -61,6 +65,9 @@ public class ScreenCaptureActivity extends Activity {
     private int mHeight;
     private int mRotation;
     private OrientationChangeCallback mOrientationChangeCallback;
+
+    Realm mRealm;
+    RealmConfig realmConfig;
 
 
     private class ImageAvailableListener implements ImageReader.OnImageAvailableListener {
@@ -89,10 +96,17 @@ public class ScreenCaptureActivity extends Activity {
                     fos = new FileOutputStream(fullPath);
                     bitmap.compress(CompressFormat.JPEG, 100, fos);
 
-                    //로컬 저장소에 캡쳐를 저장한 후 편집화면으로 해당 경로를 넘겨줌.
-                    Intent intent = new Intent(getApplicationContext(), EditCaptureActivity.class);
-                    intent.putExtra("ImgFullPath", fullPath);
-                    startActivity(intent);
+                    User user_db = mRealm.where(User.class).equalTo("no",1).findFirst();
+                    if(user_db.isSend_capture_without_edit()){
+                        //편집 없이 바로 보내는 경우
+                        MailPresenter mailPresenter = new MailPresenter(getApplicationContext());
+                        mailPresenter.SendBtn("capture", fullPath);
+                    }else{
+                        //로컬 저장소에 캡쳐를 저장한 후 편집화면으로 해당 경로를 넘겨줌.
+                        Intent intent = new Intent(getApplicationContext(), EditCaptureActivity.class);
+                        intent.putExtra("ImgFullPath", fullPath);
+                        startActivity(intent);
+                    }
 
                 }
 
@@ -161,6 +175,10 @@ public class ScreenCaptureActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.screen_capture_activity);
 
+        realmConfig = new RealmConfig();
+        mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
+
+
         // call for the projection manager
         if (mProjectionManager == null){
             mProjectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
@@ -191,6 +209,12 @@ public class ScreenCaptureActivity extends Activity {
             }
         }
 
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        mRealm.close();
     }
 
     @Override
