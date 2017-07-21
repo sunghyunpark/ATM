@@ -1,4 +1,4 @@
-package nts.nt3.atm;
+package presenter;
 
 /**
  * Created by Sunghyun on 2017. 7. 13..

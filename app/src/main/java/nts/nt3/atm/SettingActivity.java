@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import io.realm.Realm;
+import presenter.SettingPresenter;
 import realm.RealmConfig;
 import realm.model.User;
 import service.NdeployAlarmService;
@@ -34,8 +35,6 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        settingPresenter = new SettingPresenter(getApplicationContext());
-
         InitView();
     }
 
@@ -44,6 +43,7 @@ public class SettingActivity extends AppCompatActivity {
         Realm mRealm;
         RealmConfig realmConfig;
         realmConfig = new RealmConfig();
+        settingPresenter = new SettingPresenter(getApplicationContext());
 
         mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
         User user_db = mRealm.where(User.class).equalTo("no",1).findFirst();
@@ -67,7 +67,6 @@ public class SettingActivity extends AppCompatActivity {
         CaptureWithoutEditSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingPresenter settingPresenter = new SettingPresenter(getApplicationContext());
                 if(isChecked){
                     settingPresenter.ChangeCaptureSetting(true);
                 }else{
@@ -106,9 +105,7 @@ public class SettingActivity extends AppCompatActivity {
 
                     alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            Intent intent = new Intent(getApplicationContext(), NdeployAlarmService.class);
-                            intent.putExtra("url", input_url.getText().toString());
-                            startService(intent);
+                            settingPresenter.AlarmNdeploy(input_url.getText().toString());
                             Log.d("ndeploy", "start");
 
                         }
@@ -129,8 +126,6 @@ public class SettingActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     private boolean Ndeploy_AlarmRunningCheck() {
@@ -163,6 +158,7 @@ public class SettingActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), String.format(res.getString(R.string.not_email_format_txt)),Toast.LENGTH_SHORT).show();
                 }else{
                     user_email_txt.setText(input_str);
+                    SettingPresenter settingPresenter = new SettingPresenter(getApplicationContext());
                     settingPresenter.InsertEmail(input_email.getText().toString());
                 }
             }

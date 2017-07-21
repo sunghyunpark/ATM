@@ -1,4 +1,4 @@
-package nts.nt3.atm;
+package presenter;
 
 import android.content.Context;
 import android.content.Intent;

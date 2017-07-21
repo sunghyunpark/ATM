@@ -1,4 +1,4 @@
-package capture;
+package nts.nt3.atm;
 
 /**
  * Created by NAVER on 2017-07-06.
@@ -40,10 +40,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.realm.Realm;
-import nts.nt3.atm.R;
 import realm.RealmConfig;
 import realm.model.User;
-import util.MailPresenter;
+import presenter.MailPresenter;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class ScreenCaptureActivity extends Activity {

@@ -1,4 +1,4 @@
-package capture;
+package nts.nt3.atm;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -32,9 +32,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import nts.nt3.atm.ATMApplication;
-import nts.nt3.atm.R;
-import util.MailPresenter;
+import presenter.MailPresenter;
 
 /**
  * Created by Sunghyun on 2017. 7. 7..

@@ -1,4 +1,4 @@
-package capture;
+package view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+
+import nts.nt3.atm.EditCaptureActivity;
 
 /**
  * Created by Sunghyun on 2017. 7. 12..

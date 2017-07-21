@@ -1,4 +1,4 @@
-package util;
+package model;
 
 /**
  * Created by Sunghyun on 2017. 7. 12..

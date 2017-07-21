@@ -1,4 +1,4 @@
-package capture;
+package view;
 
 import java.io.Serializable;
 

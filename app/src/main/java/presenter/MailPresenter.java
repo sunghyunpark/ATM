@@ -1,4 +1,4 @@
-package util;
+package presenter;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -8,6 +8,9 @@ import android.widget.Toast;
 import io.realm.Realm;
 import realm.RealmConfig;
 import realm.model.User;
+import util.EmailClient;
+import model.EmailInfo;
+import util.GmailAddress;
 
 /**
  * Created by Sunghyun on 2017. 7. 12..

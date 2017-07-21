@@ -21,8 +21,8 @@ import android.widget.Toast;
 import com.lukedeighton.wheelview.WheelView;
 import com.lukedeighton.wheelview.adapter.WheelAdapter;
 
-import capture.ScreenCaptureActivity;
-import capture.ScreenRecordActivity;
+import nts.nt3.atm.ScreenCaptureActivity;
+import nts.nt3.atm.ScreenRecordActivity;
 import nts.nt3.atm.ATMApplication;
 import nts.nt3.atm.MainActivity;
 import nts.nt3.atm.R;

@@ -4,7 +4,7 @@
     android:id="@+id/activity_edit_capture"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="capture.EditCaptureActivity">
+    tools:context=".EditCaptureActivity">
 
 
     <ImageView
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <capture.DrawView
+    <view.DrawView
         android:id="@+id/drawView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -32,15 +32,15 @@
             android:name="service.NdeployAlarmService"/>
 
         <activity
-            android:name="capture.EditCaptureActivity"
+            android:name=".EditCaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="capture.ScreenRecordActivity"
+            android:name=".ScreenRecordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="capture.ScreenCaptureActivity"
+            android:name=".ScreenCaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
         <activity android:name=".SettingActivity" />

@@ -1,4 +1,4 @@
-package capture;
+package nts.nt3.atm;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,8 +23,8 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import nts.nt3.atm.R;
-import util.MailPresenter;
+import presenter.MailPresenter;
+import view.DrawView;
 
 /**
  * ScreenCaptureActivity로부터 캡쳐 이미지의 로컬 경로를 받아옴.
