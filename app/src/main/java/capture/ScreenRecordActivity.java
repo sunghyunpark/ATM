@@ -32,11 +32,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import io.realm.Realm;
 import nts.nt3.atm.ATMApplication;
 import nts.nt3.atm.R;
-import realm.RealmConfig;
-import realm.model.User;
 import util.MailPresenter;
 
 /**
@@ -60,8 +57,6 @@ public class ScreenRecordActivity extends AppCompatActivity {
 
     private String filePath;
     private int recordLevel;
-    Realm mRealm;
-    RealmConfig realmConfig;
     //버튼
     ImageView high_btn;
     ImageView mid_btn;
@@ -129,11 +124,7 @@ public class ScreenRecordActivity extends AppCompatActivity {
     }
 
     private void InitView(){
-        realmConfig = new RealmConfig();
 
-        mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
-        User user_db = mRealm.where(User.class).equalTo("no",1).findFirst();
-        recordLevel = user_db.getRecordState();
         ViewGroup record_state_high_btn = (ViewGroup)findViewById(R.id.record_state_high_btn);
         ViewGroup record_state_mid_btn = (ViewGroup)findViewById(R.id.record_state_mid_btn);
         ViewGroup record_state_low_btn = (ViewGroup)findViewById(R.id.record_state_low_btn);
@@ -144,6 +135,7 @@ public class ScreenRecordActivity extends AppCompatActivity {
         mid_btn = (ImageView)findViewById(R.id.mid_btn);
         low_btn = (ImageView)findViewById(R.id.low_btn);
 
+        recordLevel = 2;
         InitState(recordLevel);
 
         record_state_high_btn.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +143,7 @@ public class ScreenRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 recordLevel = 1;
                 InitState(recordLevel);
-                UpdateRecordLevel();
+
             }
         });
         record_state_mid_btn.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +151,7 @@ public class ScreenRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 recordLevel = 2;
                 InitState(recordLevel);
-                UpdateRecordLevel();
+
             }
         });
         record_state_low_btn.setOnClickListener(new View.OnClickListener() {
@@ -167,19 +159,9 @@ public class ScreenRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 recordLevel = 3;
                 InitState(recordLevel);
-                UpdateRecordLevel();
+
             }
         });
-    }
-
-    private void UpdateRecordLevel(){
-        RealmConfig realmConfig = new RealmConfig();
-        Realm mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
-
-        User user_db = mRealm.where(User.class).equalTo("no",1).findFirst();
-        mRealm.beginTransaction();
-        user_db.setRecordState(recordLevel);
-        mRealm.commitTransaction();
     }
 
     private void InitState(int level){
@@ -324,7 +306,6 @@ public class ScreenRecordActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         destroyMediaProjection();
-        mRealm.close();
     }
 
     private void destroyMediaProjection() {

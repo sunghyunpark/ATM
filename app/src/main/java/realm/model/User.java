@@ -11,10 +11,9 @@ public class User extends RealmObject{
 
     @PrimaryKey
     private int no;
-
     private String email;
+    private boolean send_capture_without_edit;
 
-    private int recordState = 2;
 
     public int getNo() {
         return no;
@@ -32,12 +31,13 @@ public class User extends RealmObject{
         this.email = email;
     }
 
-    public int getRecordState() {
-        return recordState;
+    public boolean isSend_capture_without_edit() {
+        return send_capture_without_edit;
     }
 
-    public void setRecordState(int recordState) {
-        this.recordState = recordState;
+    public void setSend_capture_without_edit(boolean send_capture_without_edit) {
+        this.send_capture_without_edit = send_capture_without_edit;
     }
+
 
 }
