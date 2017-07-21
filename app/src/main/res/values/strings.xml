@@ -33,6 +33,8 @@
     <string name="setting_activity_alarm_subtext">등록된 메일이 있는 경우 자동으로 메일 전송이 됩니다\n만약 없는 경우에는 ATM폴더에 저장됩니다.</string>
     <string name="setting_activity_record_state_title">녹화</string>
     <string name="setting_activity_record_state_txt">녹화 화질 상태</string>
+    <string name="setting_activity_capture_title_txt">캡쳐</string>
+    <string name="setting_activity_send_capture_without_edit_txt">편집작업 없이 바로 저장 및 메일로 전송합니다.</string>
 
     <!--Insert Email Dialog-->
     <string name="insert_email_dialog_title">메일 입력</string>
