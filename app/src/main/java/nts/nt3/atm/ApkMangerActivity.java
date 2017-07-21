@@ -5,8 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class ApkMangerActivity extends AppCompatActivity {
     //뷰페이저
@@ -26,6 +29,8 @@ public class ApkMangerActivity extends AppCompatActivity {
     private void InitView(){
         final Button downloadBtn = (Button)findViewById(R.id.download_btn);
         final Button settingBtn = (Button)findViewById(R.id.setting_btn);
+        ImageView backBtn = (ImageView)findViewById(R.id.back_btn);
+        backBtn.setOnTouchListener(myOnTouchListener);
 
         //뷰페이저
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -60,6 +65,22 @@ public class ApkMangerActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int arg0) {
                 // TODO Auto-generated method stub
+            }
+        });
+        downloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager.setCurrentItem(0);
+                settingBtn.setTextColor(getResources().getColor(R.color.colorBlack));
+                downloadBtn.setTextColor(getResources().getColor(R.color.colorSky));
+            }
+        });
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager.setCurrentItem(1);
+                settingBtn.setTextColor(getResources().getColor(R.color.colorSky));
+                downloadBtn.setTextColor(getResources().getColor(R.color.colorBlack));
             }
         });
     }
@@ -114,4 +135,27 @@ public class ApkMangerActivity extends AppCompatActivity {
             return NUM_PAGES;
         }
     }
+    /**
+     * 각 버튼들 이벤트
+     */
+    private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setAlpha(0.55f);
+            }else if(event.getAction() == MotionEvent.ACTION_CANCEL){
+                v.setAlpha(1.0f);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setAlpha(1.0f);
+                switch(v.getId()){
+
+                    case R.id.back_btn:
+                        finish();
+                        break;
+                }
+            }
+            return true;
+        }
+    };
 }
