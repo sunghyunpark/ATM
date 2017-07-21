@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.lukedeighton.wheelview.WheelView;
 import com.lukedeighton.wheelview.adapter.WheelAdapter;
 
+import nts.nt3.atm.ApkMangerActivity;
 import nts.nt3.atm.ScreenCaptureActivity;
 import nts.nt3.atm.ScreenRecordActivity;
 import nts.nt3.atm.ATMApplication;
@@ -172,7 +173,10 @@ public class WheelViewService extends Service implements Wheelable{
     //manage app
     @Override
     public void startManageApp(){
-        Toast.makeText(getApplicationContext(), "startManageApp", Toast.LENGTH_SHORT).show();
+        stopService(new Intent(getApplicationContext(), WheelViewService.class));
+        Intent intent = new Intent(getApplicationContext(), ApkMangerActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
     //go to home
     @Override

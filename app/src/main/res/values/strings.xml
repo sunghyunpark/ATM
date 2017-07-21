@@ -78,4 +78,12 @@
     <string name="screen_record_start_txt">녹화 시작</string>
     <string name="screed_record_stop_txt">녹화 중지</string>
 
+    <!--ApkManagerActivity-->
+    <string name="apk_manager_activity_title_txt">앱관리</string>
+    <string name="apk_manager_activity_download_btn_txt">다운로드 링크</string>
+    <string name="apk_manager_activity_setting_btn_txt">설정</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

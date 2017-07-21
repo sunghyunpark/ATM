@@ -5,7 +5,7 @@ package model;
  * Email 정보
  */
 
-public class EmailInfo {
+public class EmailInfoModel {
     private String mailType;
     private String FilePath;
     private String userEmail;

@@ -6,4 +6,6 @@
 
     <color name="colorBasic">#212121</color>
     <color name="colorSky">#3babe1</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorGray">#ffe0e0e0</color>
 </resources>

@@ -140,7 +140,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.app_setting_btn:
-
+                        Intent intent_apk_manager = new Intent(getApplicationContext(), ApkMangerActivity.class);
+                        startActivity(intent_apk_manager);
                         break;
 
                     case R.id.setting_btn:

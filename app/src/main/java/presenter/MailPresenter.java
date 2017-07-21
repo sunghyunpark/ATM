@@ -9,7 +9,7 @@ import io.realm.Realm;
 import realm.RealmConfig;
 import realm.model.User;
 import util.EmailClient;
-import model.EmailInfo;
+import model.EmailInfoModel;
 import util.GmailAddress;
 
 /**
@@ -34,16 +34,16 @@ public class MailPresenter implements Mailable {
 
         User user_db = mRealm.where(User.class).equalTo("no",1).findFirst();
 
-        EmailInfo emailInfo = new EmailInfo();
-        emailInfo.setMailType(type);
-        emailInfo.setUserEmail(user_db.getEmail());
-        emailInfo.setFilePath(FilePath);
+        EmailInfoModel emailInfoModel = new EmailInfoModel();
+        emailInfoModel.setMailType(type);
+        emailInfoModel.setUserEmail(user_db.getEmail());
+        emailInfoModel.setFilePath(FilePath);
 
         SendEmailTask sendEmailTask = new SendEmailTask();
-        sendEmailTask.execute(emailInfo);
+        sendEmailTask.execute(emailInfoModel);
     }
 
-    private class SendEmailTask extends AsyncTask<EmailInfo, String, String> {
+    private class SendEmailTask extends AsyncTask<EmailInfoModel, String, String> {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
@@ -51,7 +51,7 @@ public class MailPresenter implements Mailable {
         }
 
         @Override
-        protected String doInBackground(EmailInfo... data){
+        protected String doInBackground(EmailInfoModel... data){
             String mailType = data[0].getMailType();
             String user_email = data[0].getUserEmail();
             String path = data[0].getFilePath();
