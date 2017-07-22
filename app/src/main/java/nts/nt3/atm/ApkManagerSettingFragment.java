@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +37,7 @@ public class ApkManagerSettingFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        InitView();
+        SetList();
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class ApkManagerSettingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_apk_manager_setting, container, false);
-
+        InitView();
         return v;
     }
 
@@ -58,7 +60,6 @@ public class ApkManagerSettingFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration =
                 new DividerItemDecoration(getActivity(),new LinearLayoutManager(getActivity()).getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
-        SetList();
     }
 
     private void SetList(){
@@ -151,6 +152,13 @@ public class ApkManagerSettingFragment extends Fragment {
                     }
                 });
 
+                VHitem.deleteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        removeApp(position);
+                    }
+                });
+
             }
         }
         class VHitem_AppList extends RecyclerView.ViewHolder{
@@ -158,13 +166,21 @@ public class ApkManagerSettingFragment extends Fragment {
             TextView app_name_txt;
             TextView app_package_txt;
             ImageView app_icon;
+            Button deleteBtn;
             private VHitem_AppList(View itemView) {
                 super(itemView);
                 item_layout = (ViewGroup)itemView.findViewById(R.id.item_layout);
                 app_icon = (ImageView)itemView.findViewById(R.id.app_icon);
                 app_name_txt = (TextView)itemView.findViewById(R.id.app_name_txt);
                 app_package_txt = (TextView)itemView.findViewById(R.id.app_package_txt);
+                deleteBtn = (Button)itemView.findViewById(R.id.delete_btn);
             }
+        }
+        private void removeApp(int position) {
+            PackageInfo packageInfo = (PackageInfo) getItem(position-1);
+            Intent intent = new Intent(Intent.ACTION_DELETE)
+                    .setData(Uri.parse("package:" + packageInfo.packageName));
+            startActivity(intent);
         }
         @Override
         public int getItemViewType(int position) {

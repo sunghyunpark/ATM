@@ -48,13 +48,13 @@ public class ApkManagerDownloadFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        InitView();
+        SetList();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_apk_manager_download, container, false);
-
+        InitView();
         return v;
     }
 
@@ -69,8 +69,6 @@ public class ApkManagerDownloadFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration =
                 new DividerItemDecoration(getActivity(),new LinearLayoutManager(getActivity()).getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
-
-        SetList();
     }
 
     private void SetList(){

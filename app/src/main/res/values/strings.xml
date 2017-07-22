@@ -83,7 +83,7 @@
     <string name="apk_manager_activity_download_btn_txt">다운로드 링크</string>
     <string name="apk_manager_activity_setting_btn_txt">설정</string>
 
-    <!--WriteDownLoadLinkActivity-->
+    <!--WriteActivity-->
     <string name="write_download_link_activity_title">링크 작성</string>
     <string name="write_activity_save_btn">저장</string>
     <string name="write_download_link_activity_title_hint">제목</string>
