@@ -24,4 +24,18 @@ public class RealmConfig{
         return config;
 
     }
+
+    public RealmConfiguration DownLoad_DefaultRealmVersion(Context context){
+
+        Realm.init(context);    //realm 초기화
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("DownLoadLink.realm")
+                .schemaVersion(1)
+                .deleteRealmIfMigrationNeeded()
+                //.migration(new Migration())
+                .build();
+
+        return config;
+
+    }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import io.realm.Realm;
-import realm.RealmConfig;
 import realm.model.User;
 import service.NdeployAlarmService;
 
@@ -14,17 +13,13 @@ import service.NdeployAlarmService;
 
 public class SettingPresenter implements SettingInterface {
     Context context;
-    RealmConfig realmConfig;
-    Realm mRealm;
 
     public SettingPresenter(Context context){
         this.context = context;
-        realmConfig = new RealmConfig();
-        mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(context));
     }
 
     @Override
-    public void InsertEmail(String email){
+    public void InsertEmail(Realm mRealm, String email){
         User user_db = mRealm.where(User.class).equalTo("no",1).findFirst();
         mRealm.beginTransaction();
         user_db.setEmail(email);
@@ -45,7 +40,7 @@ public class SettingPresenter implements SettingInterface {
     }
 
     @Override
-    public void ChangeCaptureSetting(boolean flag){
+    public void ChangeCaptureSetting(Realm mRealm, boolean flag){
         User user_db = mRealm.where(User.class).equalTo("no",1).findFirst();
         mRealm.beginTransaction();
         user_db.setSend_capture_without_edit(flag);

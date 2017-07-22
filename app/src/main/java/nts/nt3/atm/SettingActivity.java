@@ -27,9 +27,16 @@ import service.NdeployAlarmService;
 
 public class SettingActivity extends AppCompatActivity {
 
+    Realm mRealm;
+    RealmConfig realmConfig;
     TextView user_email_txt;
     SettingPresenter settingPresenter;
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        mRealm.close();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +47,6 @@ public class SettingActivity extends AppCompatActivity {
 
     private void InitView(){
 
-        Realm mRealm;
-        RealmConfig realmConfig;
         realmConfig = new RealmConfig();
         settingPresenter = new SettingPresenter(getApplicationContext());
 
@@ -68,9 +73,9 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    settingPresenter.ChangeCaptureSetting(true);
+                    settingPresenter.ChangeCaptureSetting(mRealm, true);
                 }else{
-                    settingPresenter.ChangeCaptureSetting(false);
+                    settingPresenter.ChangeCaptureSetting(mRealm, false);
                 }
             }
         });
@@ -159,7 +164,7 @@ public class SettingActivity extends AppCompatActivity {
                 }else{
                     user_email_txt.setText(input_str);
                     SettingPresenter settingPresenter = new SettingPresenter(getApplicationContext());
-                    settingPresenter.InsertEmail(input_email.getText().toString());
+                    settingPresenter.InsertEmail(mRealm, input_email.getText().toString());
                 }
             }
         });

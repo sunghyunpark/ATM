@@ -6,7 +6,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import io.realm.Realm;
+import realm.RealmConfig;
+import realm.model.DownLoadLink;
+
 public class WriteDownLoadLinkActivity extends AppCompatActivity {
+
+    Realm mRealm;
+    RealmConfig realmConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +24,25 @@ public class WriteDownLoadLinkActivity extends AppCompatActivity {
     }
 
     private void InitView(){
+        realmConfig = new RealmConfig();
+        mRealm = Realm.getInstance(realmConfig.DownLoad_DefaultRealmVersion(getApplicationContext()));
+
         ImageView backBtn = (ImageView)findViewById(R.id.back_btn);
         backBtn.setOnTouchListener(myOnTouchListener);
+    }
+
+    //autoincrement 증가
+    public int getNextKey()
+    {
+        int key;
+        try {
+            key = mRealm.where(DownLoadLink.class).max("no").intValue() + 1;
+        } catch(ArrayIndexOutOfBoundsException ex) {
+            key = 0;
+        }catch (NullPointerException n){
+            key = 0;
+        }
+        return key;
     }
 
     /**
