@@ -1,6 +1,9 @@
 package nts.nt3.atm;
 
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,30 +123,35 @@ public class ApkManagerDownloadFragment extends Fragment {
 
                 VHitem.linkTitle.setText(currentItem.getLinkTitle());
                 VHitem.linkUrl.setText(currentItem.getLinkUrl());
+                VHitem.download_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try{
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentItem.getLinkUrl()));
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+                            startActivity(intent);
+                        }catch (ActivityNotFoundException e){
+                            Toast.makeText(getContext(), "url주소를 다시 확인해주세요.",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
             }
         }
 
-        public void addItem(DownLinkModel items){
-            listItems.add(0, items);
-            adapter.notifyDataSetChanged();
-        }
-
-
-        public class VHitem_items extends RecyclerView.ViewHolder{
+        private class VHitem_items extends RecyclerView.ViewHolder{
             ViewGroup item_layout;
             TextView linkTitle;
             TextView linkUrl;
             ImageView download_btn;
 
-            public VHitem_items(View itemView) {
+            private VHitem_items(View itemView) {
                 super(itemView);
                 item_layout = (ViewGroup)itemView.findViewById(R.id.item_layout);
                 linkUrl = (TextView)itemView.findViewById(R.id.link_url_txt);
                 linkTitle = (TextView)itemView.findViewById(R.id.link_title_txt);
                 download_btn = (ImageView)itemView.findViewById(R.id.download_btn);
             }
-
         }
 
         private boolean isPositionHeader(int position) {
