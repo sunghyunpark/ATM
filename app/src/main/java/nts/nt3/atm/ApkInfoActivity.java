@@ -6,6 +6,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +42,8 @@ public class ApkInfoActivity extends AppCompatActivity {
         path = (TextView) findViewById(R.id.path);
         installed = (TextView) findViewById(R.id.insdate);
         lastModify = (TextView) findViewById(R.id.last_modify);
+        ImageView backBtn = (ImageView)findViewById(R.id.back_btn);
+        backBtn.setOnTouchListener(myOnTouchListener);
     }
 
     private void setValues() {
@@ -114,4 +118,29 @@ public class ApkInfoActivity extends AppCompatActivity {
         }
         return features;
     }
+
+    /**
+     * 각 버튼들 이벤트
+     */
+    private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setAlpha(0.55f);
+            }else if(event.getAction() == MotionEvent.ACTION_CANCEL){
+                v.setAlpha(1.0f);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setAlpha(1.0f);
+                switch(v.getId()){
+
+                    case R.id.back_btn:
+                        finish();
+                        break;
+
+                }
+            }
+            return true;
+        }
+    };
 }
