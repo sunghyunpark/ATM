@@ -92,6 +92,22 @@
     <string name="write_memo_activity_title_hint">제목</string>
     <string name="write_memo_activity_content_hint">내용</string>
 
+    <!--ApkInfoActivity-->
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_apk_list">AppList Demo</string>
+    <string name="appicon">Application Icon</string>
+    <string name="apkname">Application Name:</string>
+    <string name="package_name">Package Name:</string>
+    <string name="current_version">Current_Version:</string>
+    <string name="market_version">Market_Version:</string>
+    <string name="features">Required Features:</string>
+    <string name="permissions">Required Permissions:</string>
+    <string name="req_version">Taget SDK Version:</string>
+    <string name="path_info">Path Info:</string>
+    <string name="appsize">Physical Size</string>
+    <string name="installed">Installed:</string>
+    <string name="modified">Last Modified:</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

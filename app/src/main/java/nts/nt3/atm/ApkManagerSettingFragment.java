@@ -145,6 +145,8 @@ public class ApkManagerSettingFragment extends Fragment {
 
                         ATMApplication appData = (ATMApplication) getActivity().getApplicationContext();
                         appData.setPackageInfo(packageInfo);
+                        Intent intent = new Intent(getActivity(), ApkInfoActivity.class);
+                        startActivity(intent);
 
                     }
                 });
