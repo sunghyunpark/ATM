@@ -3,6 +3,7 @@ package nts.nt3.atm;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +15,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import model.DownLinkModel;
+import realm.RealmConfig;
+import realm.model.DownLoadLink;
 
 /**
  * Created by NAVER on 2017-07-21.
@@ -23,6 +28,8 @@ import model.DownLinkModel;
 
 public class ApkManagerDownloadFragment extends Fragment {
     View v;
+    Realm mRealm;
+    RealmConfig realmConfig;
     //리뷰 리사이클러뷰
     RecyclerAdapter adapter;
     RecyclerView recyclerView;
@@ -32,26 +39,51 @@ public class ApkManagerDownloadFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        InitView();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_apk_manager_download, container, false);
 
-        InitView();
         return v;
     }
 
     private void InitView(){
+        realmConfig = new RealmConfig();
+        mRealm = Realm.getInstance(realmConfig.DownLoad_DefaultRealmVersion(getActivity()));
+
         recyclerView = (RecyclerView)v.findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
+        //recyclerview 구분선
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(getActivity(),new LinearLayoutManager(getActivity()).getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
         SetList();
     }
 
     private void SetList(){
         listItems = new ArrayList<DownLinkModel>();
+        RealmResults<DownLoadLink> dataList = mRealm.where(DownLoadLink.class).findAll();
+
+        int dataSize = dataList.size();
+        DownLinkModel downLinkModel;
+        for(int i=0;i<dataSize;i++){
+            downLinkModel = new DownLinkModel();
+            downLinkModel.setNo(dataList.get(i).getNo());
+            downLinkModel.setLinkTitle(dataList.get(i).getLinkTitle());
+            downLinkModel.setLinkUrl(dataList.get(i).getLinkUrl());
+            listItems.add(downLinkModel);
+        }
+        adapter = new RecyclerAdapter(listItems);
+        recyclerView.setAdapter(adapter);
     }
 
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -85,6 +117,8 @@ public class ApkManagerDownloadFragment extends Fragment {
                 final DownLinkModel currentItem = getItem(position);
                 final VHitem_items VHitem = (VHitem_items)holder;
 
+                VHitem.linkTitle.setText(currentItem.getLinkTitle());
+                VHitem.linkUrl.setText(currentItem.getLinkUrl());
 
             }
         }

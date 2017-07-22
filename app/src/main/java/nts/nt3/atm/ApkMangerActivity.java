@@ -158,7 +158,8 @@ public class ApkMangerActivity extends AppCompatActivity {
                         break;
 
                     case R.id.add_url_btn:
-                        Intent intent = new Intent(getApplicationContext(), WriteDownLoadLinkActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), WriteActivity.class);
+                        intent.putExtra("flag", "Link");
                         startActivity(intent);
                         break;
                 }

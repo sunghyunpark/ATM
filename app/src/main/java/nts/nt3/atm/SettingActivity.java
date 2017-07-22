@@ -35,6 +35,8 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
+        if(settingPresenter != null)
+            settingPresenter = null;
         mRealm.close();
     }
     @Override

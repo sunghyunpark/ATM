@@ -85,9 +85,12 @@
 
     <!--WriteDownLoadLinkActivity-->
     <string name="write_download_link_activity_title">링크 작성</string>
-    <string name="write_download_link_activity_save_btn">저장</string>
+    <string name="write_activity_save_btn">저장</string>
     <string name="write_download_link_activity_title_hint">제목</string>
     <string name="write_download_link_activity_url_hint">다운로드 링크를 입력해주세요.</string>
+    <string name="write_memo_activity_title">메모 작성</string>
+    <string name="write_memo_activity_title_hint">제목</string>
+    <string name="write_memo_activity_content_hint">내용</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

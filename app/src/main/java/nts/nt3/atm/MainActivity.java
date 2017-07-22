@@ -30,6 +30,14 @@ import service.WheelViewService;
  */
 public class MainActivity extends AppCompatActivity {
 
+    Realm mRealm;
+    RealmConfig realmConfig;
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        mRealm.close();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void InitUserData(){
-        Realm mRealm;
-        RealmConfig realmConfig;
         realmConfig = new RealmConfig();
         mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
 

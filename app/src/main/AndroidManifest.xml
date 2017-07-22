@@ -44,7 +44,7 @@
             android:theme="@android:style/Theme.Translucent" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".ApkMangerActivity" />
-        <activity android:name=".WriteDownLoadLinkActivity"></activity>
+        <activity android:name=".WriteActivity"></activity>
     </application>
 
 </manifest>
