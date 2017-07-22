@@ -32,7 +32,7 @@ public class ApkMangerActivity extends AppCompatActivity {
         final Button settingBtn = (Button)findViewById(R.id.setting_btn);
         ImageView backBtn = (ImageView)findViewById(R.id.back_btn);
         backBtn.setOnTouchListener(myOnTouchListener);
-        ImageView addUrlBtn = (ImageView)findViewById(R.id.add_url_btn);
+        final ImageView addUrlBtn = (ImageView)findViewById(R.id.add_url_btn);
         addUrlBtn.setOnTouchListener(myOnTouchListener);
 
         //뷰페이저
@@ -47,15 +47,16 @@ public class ApkMangerActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 // TODO Auto-generated method stub
                 temp = position;
-
                 switch (temp) {
                     case 0:
                         settingBtn.setTextColor(getResources().getColor(R.color.colorBlack));
                         downloadBtn.setTextColor(getResources().getColor(R.color.colorSky));
+                        addUrlBtn.setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         settingBtn.setTextColor(getResources().getColor(R.color.colorSky));
                         downloadBtn.setTextColor(getResources().getColor(R.color.colorBlack));
+                        addUrlBtn.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -114,7 +115,6 @@ public class ApkMangerActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-
             Fragment fragment = null;
             switch (position) {
                 case 0:
