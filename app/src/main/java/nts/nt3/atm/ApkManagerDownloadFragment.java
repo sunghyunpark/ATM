@@ -133,6 +133,17 @@ public class ApkManagerDownloadFragment extends Fragment {
                         }
                     }
                 });
+                VHitem.item_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), WriteActivity.class);
+                        intent.putExtra("flag", "EditLink");
+                        intent.putExtra("no", currentItem.getNo());
+                        intent.putExtra("EditTitle", currentItem.getLinkTitle());
+                        intent.putExtra("EditContent", currentItem.getLinkUrl());
+                        startActivity(intent);
+                    }
+                });
 
             }
         }

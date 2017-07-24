@@ -22,7 +22,9 @@ public class WriteActivity extends AppCompatActivity {
     Realm mRealm;
     RealmConfig realmConfig;
     WritePresenter writePresenter;
-    private String flag;    //Link / Memo
+    private String flag;    //Link / Memo / Edit(EditLink / EditMemo)
+    private int no;     //EditMode인 경우
+    private String title_str, content_str;    //EditMode인경우
     private EditText title_et;
     private EditText content_et;
 
@@ -41,6 +43,11 @@ public class WriteActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         flag = intent.getExtras().getString("flag");
+        if(flag.equals("EditLink") || flag.equals("EditMemo")){
+            no = intent.getExtras().getInt("no");
+            title_str = intent.getExtras().getString("EditTitle");
+            content_str = intent.getExtras().getString("EditContent");
+        }
         InitView();
     }
 
@@ -62,10 +69,17 @@ public class WriteActivity extends AppCompatActivity {
             title_tv.setText(String.format(res.getString(R.string.write_download_link_activity_title)));
             title_et.setHint(String.format(res.getString(R.string.write_memo_activity_title_hint)));
             content_et.setHint(String.format(res.getString(R.string.write_memo_activity_content_hint)));
-        }else{
+        }else if(flag.equals("Memo")){
             title_tv.setText(String.format(res.getString(R.string.write_memo_activity_title)));
             title_et.setHint(String.format(res.getString(R.string.write_memo_activity_title_hint)));
             content_et.setHint(String.format(res.getString(R.string.write_memo_activity_content_hint)));
+        }else{
+            // Edit Mode (EditLink / EditMemo)
+            title_tv.setText(String.format(res.getString(R.string.write_edit_activity_title)));
+            title_et.setHint(String.format(res.getString(R.string.write_download_link_activity_title_hint)));
+            content_et.setHint(String.format(res.getString(R.string.write_download_link_activity_url_hint)));
+            title_et.setText(title_str);
+            content_et.setText(content_str);
         }
     }
 
@@ -104,13 +118,16 @@ public class WriteActivity extends AppCompatActivity {
                     case R.id.back_btn:
                         finish();
                         break;
-
                     case R.id.save_btn:
                         Resources res = getResources();
                         if(title_et.getText().toString().trim().equals("") || content_et.getText().toString().trim().equals("")){
                             Toast.makeText(getApplicationContext(), String.format(res.getString(R.string.not_exist_info_txt)), Toast.LENGTH_SHORT).show();
                         }else{
-                            writePresenter.Write(mRealm, flag, getNextKey(flag), title_et.getText().toString().trim(), content_et.getText().toString().trim());
+                            if(!flag.equals("EditLink") || !flag.equals("EditMemo")){    //Edit 모드가 아닌 경우(Link / Memo)
+                                writePresenter.Write(mRealm, flag, getNextKey(flag), title_et.getText().toString().trim(), content_et.getText().toString().trim());
+                            }else{    //Edit모드인경우(EditLink / EditMemo)
+
+                            }
                             finish();
                         }
                         break;

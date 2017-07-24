@@ -91,6 +91,7 @@
     <string name="write_memo_activity_title">메모 작성</string>
     <string name="write_memo_activity_title_hint">제목</string>
     <string name="write_memo_activity_content_hint">내용</string>
+    <string name="write_edit_activity_title">수정</string>
 
     <!--ApkInfoActivity-->
     <string name="menu_settings">Settings</string>

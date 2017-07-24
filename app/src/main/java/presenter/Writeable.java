@@ -9,5 +9,5 @@ import io.realm.Realm;
 
 public interface Writeable {
     public void Write(Realm mRealm, String flag, int no, String title, String contents);
-    public void Edit();
+    public void Edit(Realm mRealm, String flag, int no, String title, String contents);
 }

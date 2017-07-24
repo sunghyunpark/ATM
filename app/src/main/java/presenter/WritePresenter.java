@@ -15,7 +15,7 @@ public class WritePresenter implements Writeable{
     /**
      * DownLoadLink / Memo 글쓰기 기능
      * @param mRealm Realm 객체
-     * @param flag Link / Memo
+     * @param flag Link / Memo / Edit(EditLink / EditMemo)
      * @param no Realm에 넣을 no
      * @param title 글 제목
      * @param contents 글 내용
@@ -41,7 +41,7 @@ public class WritePresenter implements Writeable{
     }
 
     @Override
-    public void Edit(){
+    public void Edit(Realm mRealm, String flag, int no, String title, String contents){
 
     }
 
