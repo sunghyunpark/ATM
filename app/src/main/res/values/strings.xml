@@ -54,6 +54,12 @@
     <string name="ndeploy_alarm_dialog_txt">Ndeploy URL을 입력해주세요.</string>
 
     <!--LogCat-->
+    <string name="logcat_main_title">LogCat</string>
+    <string name="logcat_setting_dialog_btn1">검색</string>
+    <string name="logcat_setting_dialog_btn2">초기화</string>
+    <string name="logcat_setting_dialog_btn3">저장</string>
+    <string name="logcat_setting_dialog_btn4">설정</string>
+    <string name="logcat_setting_dialog_btn5">오버레이</string>
     <string name="filter_menu">필터 (%s)</string>
     <string name="filter_menu_empty">필터</string>
     <string name="saving_log">로그를 저장합니다: %s, 기다려주세요</string>

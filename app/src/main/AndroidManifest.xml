@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 로그캣-->
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".ATMApplication"
@@ -29,6 +32,8 @@
             android:enabled="true"
             android:exported="false" />
         <service android:name="service.NdeployAlarmService" />
+        <service android:name="logcat.LogOverlayService" />
+        <service android:name="logcat.LogSavingService" />
 
         <activity
             android:name=".EditCaptureActivity"
@@ -42,6 +47,21 @@
             android:name=".ScreenCaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name="logcat.PreferencesActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="logcat.LogcatMain"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="logcat.LogcatSetting_Dialog"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
         <activity android:name=".SettingActivity" />
         <activity android:name=".ApkMangerActivity" />
         <activity android:name=".WriteActivity" />

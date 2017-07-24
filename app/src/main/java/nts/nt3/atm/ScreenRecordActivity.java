@@ -200,6 +200,7 @@ public class ScreenRecordActivity extends AppCompatActivity {
 
     public void onToggleScreenShare(View view) {
         if (((ToggleButton) view).isChecked()) {
+            ATMApplication.recordState = true;
             initRecorder();
             shareScreen();
         } else {
