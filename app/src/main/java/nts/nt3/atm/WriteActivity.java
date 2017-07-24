@@ -123,10 +123,10 @@ public class WriteActivity extends AppCompatActivity {
                         if(title_et.getText().toString().trim().equals("") || content_et.getText().toString().trim().equals("")){
                             Toast.makeText(getApplicationContext(), String.format(res.getString(R.string.not_exist_info_txt)), Toast.LENGTH_SHORT).show();
                         }else{
-                            if(!flag.equals("EditLink") || !flag.equals("EditMemo")){    //Edit 모드가 아닌 경우(Link / Memo)
+                            if(!flag.equals("EditLink") && !flag.equals("EditMemo")){    //Edit 모드가 아닌 경우(Link / Memo)
                                 writePresenter.Write(mRealm, flag, getNextKey(flag), title_et.getText().toString().trim(), content_et.getText().toString().trim());
                             }else{    //Edit모드인경우(EditLink / EditMemo)
-
+                                writePresenter.Edit(mRealm, flag, no, title_et.getText().toString().trim(), content_et.getText().toString().trim());
                             }
                             finish();
                         }

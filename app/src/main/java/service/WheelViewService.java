@@ -173,7 +173,7 @@ public class WheelViewService extends Service implements Wheelable{
     //manage app
     @Override
     public void startManageApp(){
-        stopService(new Intent(getApplicationContext(), WheelViewService.class));
+        stopService();
         Intent intent = new Intent(getApplicationContext(), ApkMangerActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

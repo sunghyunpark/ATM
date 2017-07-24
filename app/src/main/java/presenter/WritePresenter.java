@@ -1,7 +1,6 @@
 package presenter;
 
 import io.realm.Realm;
-import io.realm.internal.Context;
 import realm.model.DownLoadLink;
 
 /**
@@ -10,12 +9,10 @@ import realm.model.DownLoadLink;
 
 public class WritePresenter implements Writeable{
 
-    Context context;
-
     /**
      * DownLoadLink / Memo 글쓰기 기능
      * @param mRealm Realm 객체
-     * @param flag Link / Memo / Edit(EditLink / EditMemo)
+     * @param flag Link / Memo
      * @param no Realm에 넣을 no
      * @param title 글 제목
      * @param contents 글 내용
@@ -40,9 +37,25 @@ public class WritePresenter implements Writeable{
         }
     }
 
+    /**
+     * DownLoadLink / Memo 수정 기능
+     * @param mRealm
+     * @param flag EditLink / EditMemo
+     * @param no
+     * @param title
+     * @param contents
+     */
     @Override
     public void Edit(Realm mRealm, String flag, int no, String title, String contents){
+        if(flag.equals("EditLink")){
+            DownLoadLink downLoadLink = mRealm.where(DownLoadLink.class).equalTo("no",no).findFirst();
+            mRealm.beginTransaction();
+            downLoadLink.setLinkTitle(title);
+            downLoadLink.setLinkUrl(contents);
+            mRealm.commitTransaction();
+        }else if(flag.equals("EditMemo")){
 
+        }
     }
 
 }
