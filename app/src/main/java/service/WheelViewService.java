@@ -168,8 +168,7 @@ public class WheelViewService extends Service implements Wheelable{
     //logcat
     @Override
     public void startLogCat(){
-        stopService(new Intent(getApplicationContext(), WheelViewService.class));
-        Toast.makeText(getApplicationContext(), "startLogCat", Toast.LENGTH_SHORT).show();
+        stopService();
         Intent intent_logcat = new Intent(getApplicationContext(), LogcatMain.class);
         intent_logcat.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent_logcat);

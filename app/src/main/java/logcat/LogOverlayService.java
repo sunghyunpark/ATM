@@ -208,11 +208,11 @@ public class LogOverlayService extends Service implements OnTouchListener {
 
 		mPrefs = new Preferences(this);
 		OverlaySize size = mPrefs.getOverlaySize();
-		if(size.isDefaultSize()){
-			size.setWidth(width / 2);
-			size.setHeight(height / 2);
-		}
-		WindowManager.LayoutParams params = new WindowManager.LayoutParams(size.getWidth(),size.getHeight(),WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,0|WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,PixelFormat.TRANSLUCENT);
+		//오버레이 사이즈
+		size.setWidth(width);
+		size.setHeight(height / 2);
+
+		WindowManager.LayoutParams params = new WindowManager.LayoutParams(size.getWidth()-size.getWidth()/3,size.getHeight(),WindowManager.LayoutParams.TYPE_TOAST,0|WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,PixelFormat.TRANSLUCENT);
 		params.gravity = Gravity.CENTER | Gravity.TOP;
 		params.x = 0;
 		params.y = 0;

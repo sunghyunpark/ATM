@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import io.realm.Realm;
+import logcat.LogcatMain;
 import realm.RealmConfig;
 import realm.model.User;
 import service.WheelViewService;
@@ -144,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.logcat_btn:
+                        Intent intent_logcat = new Intent(getApplicationContext(), LogcatMain.class);
+                        startActivity(intent_logcat);
                         break;
 
                     case R.id.app_setting_btn:
