@@ -45,13 +45,19 @@ public class LogcatMain extends ListActivity {
 	private Preferences mPrefs;
 
 	static final int FILTER_DIALOG = 1;
-
 	private static final int MENU_FILTER = 2;
 	private static final int MENU_PLAY = 3;
 	private static final int MENU_CLEAR = 4;
 	private static final int MENU_SAVE = 5;
 	private static final int MENU_PREFS = 6;
 	private static final int MENU_SERVICE = 7;
+
+	private static final int REQUEST_DIALOG = 100;
+	private static final int RESULT_SEARCH = 10;
+	private static final int RESULT_INIT = 20;
+	private static final int RESULT_SAVE = 30;
+	private static final int RESULT_SETTING = 40;
+	private static final int RESULT_OVERLAY = 50;
 
 	private boolean mPlay = true;
 
@@ -389,6 +395,29 @@ public class LogcatMain extends ListActivity {
 		}
 		return null;
 	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (resultCode) {
+			case REQUEST_DIALOG:
+				if(data.getExtras().getInt("result") == RESULT_SEARCH){
+					Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_SHORT).show();
+				}else if(data.getExtras().getInt("result") == RESULT_INIT){
+					Toast.makeText(getApplicationContext(), "2", Toast.LENGTH_SHORT).show();
+				}else if(data.getExtras().getInt("result") == RESULT_SAVE){
+					Toast.makeText(getApplicationContext(), "3", Toast.LENGTH_SHORT).show();
+				}else if(data.getExtras().getInt("result") == RESULT_SETTING){
+					Toast.makeText(getApplicationContext(), "4", Toast.LENGTH_SHORT).show();
+				}else if(data.getExtras().getInt("result") == RESULT_OVERLAY){
+					Toast.makeText(getApplicationContext(), "5", Toast.LENGTH_SHORT).show();
+				}
+				break;
+
+			default:
+				break;
+		}
+	}
+
 	/**
 	 * 각 버튼들 이벤트
 	 */
@@ -409,7 +438,7 @@ public class LogcatMain extends ListActivity {
 						break;
 					case R.id.logcat_setting_btn:
 						Intent intent = new Intent(getApplicationContext(), LogcatSetting_Dialog.class);
-						startActivity(intent);
+						startActivityForResult(intent, REQUEST_DIALOG);
 						break;
 
 				}
