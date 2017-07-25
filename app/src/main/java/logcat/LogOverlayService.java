@@ -239,8 +239,8 @@ public class LogOverlayService extends Service implements OnTouchListener {
 		if(v.equals(moveBtn)){
 			if (event.getAction() == MotionEvent.ACTION_DOWN){
 				float x = event.getRawX();
-				float y = event.getRawY();	
-				//��ġ���� x,y
+				float y = event.getRawY();
+				//터치지점 x,y
 
 				moving = false;
 
@@ -249,11 +249,11 @@ public class LogOverlayService extends Service implements OnTouchListener {
 
 				originX = location[0];
 				originY = location[1];
-				//���̾ƿ��� ��ġ(���̾ƿ� ���� 0,0)
+				//레이아웃의 위치(레이아웃 기준 0,0)
 
 				offsetX = x-originX;
 				offsetY = y-originY;
-				//��ġ������ ���̾ƿ�0,0������ ����
+				//터치지점과 레이아웃0,0지점의 차이
 
 				if(absolutePos){
 					TransX = originX;
@@ -462,14 +462,14 @@ public class LogOverlayService extends Service implements OnTouchListener {
 		try {
 			Runtime.getRuntime().exec(new String[] { "logcat", "-c" });
 		} catch (IOException e) {
-			Log.e("ExynosLogcat", "�α�Ĺ Clear ����.", e);
+			Log.e("ExynosLogcat", "로그캣 Clear 실패.", e);
 		}
 	}
 
 	private File save() {
-		final File path = new File(Environment.getExternalStorageDirectory(),"logcat_dump");
-		final File file = new File(path.getPath() + File.separator + "Exynos_Logcat_" + LogcatMain.LogDateFormat.format(new Date()) + ".txt");
-		Log.d("",path.getPath() + File.separator + "Exynos_Logcat_" + LogcatMain.LogDateFormat.format(new Date()) + ".txt");
+		final File path = new File(Environment.getExternalStorageDirectory(),"ATM");
+		final File file = new File(path.getPath() + File.separator + "ATM_Logcat_" + LogcatMain.LogDateFormat.format(new Date()) + ".txt");
+		Log.d("",path.getPath() + File.separator + "ATM_Logcat_" + LogcatMain.LogDateFormat.format(new Date()) + ".txt");
 
 		executor.execute(new Runnable() {
 			@Override
@@ -486,13 +486,13 @@ public class LogOverlayService extends Service implements OnTouchListener {
 					bw = new BufferedWriter(new FileWriter(file), 1024);
 					bw.write(content);
 				} catch (IOException e) {
-					Log.e("ExynosLogcat", "�α� ���� ����.", e);
+					Log.e("ExynosLogcat", "로그 저장 실패.", e);
 				} finally {
 					if (bw != null) {
 						try {
 							bw.close();
 						} catch (IOException e) {
-							Log.e("ExynosLogcat", "Writer �ݱ� ����.", e);
+							Log.e("ExynosLogcat", "Writer 닫기 실패.", e);
 						}
 					}
 				}

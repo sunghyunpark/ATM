@@ -51,7 +51,7 @@ public class FilterDialog extends AlertDialog {
 
 		setView(view);
 
-		setButton(BUTTON_POSITIVE, "Ȯ��",new OnClickListener() {
+		setButton(BUTTON_POSITIVE, "확인",new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				String f = filterEdit.getText().toString();
@@ -71,7 +71,7 @@ public class FilterDialog extends AlertDialog {
 						Intent sintent = new Intent(mLogMain,LogSavingService.class);
 						sintent.putExtra("timersec", timersec);
 						mLogMain.startService(sintent);
-						Toast.makeText(mLogMain, "������ ���Ͱ����� "+timersec+"(��) ���� ������ �����մϴ�.", Toast.LENGTH_SHORT).show();
+						Toast.makeText(mLogMain, "설정된 필터값으로 "+timersec+"(초) 동안 저장을 시작합니다.", Toast.LENGTH_SHORT).show();
 					}catch(NumberFormatException e){
 						patternErrorText.setText(R.string.timer_error_text);
 						patternErrorText.setVisibility(View.VISIBLE);
@@ -89,7 +89,7 @@ public class FilterDialog extends AlertDialog {
 				mLogMain.reset();
 			}
 		});
-		setButton(BUTTON_NEUTRAL, "�ʱ�ȭ",new OnClickListener() {
+		setButton(BUTTON_NEUTRAL, "초기화",new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				mPrefs.setFilter(null);
@@ -103,7 +103,7 @@ public class FilterDialog extends AlertDialog {
 				mLogMain.reset();
 			}
 		});
-		setButton(BUTTON_NEGATIVE,  "���",new OnClickListener() {
+		setButton(BUTTON_NEGATIVE,  "취소",new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				filterEdit.setText(mPrefs.getFilter());

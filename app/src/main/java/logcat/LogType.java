@@ -6,10 +6,10 @@ public enum LogType {
 	MAIN("main", "Main"),
 	EVENTS("events", "Events"),
 	RADIO("radio", "Radio");
-	
-	//������ �α� ������ Ÿ��.
-	//dev/log�� MAIN,EVENTS,RADIO,SYSTEM 4������ �αװ� ����.
-	
+
+	//보여줄 로그 버퍼의 타입.
+	//dev/log에 MAIN,EVENTS,RADIO,SYSTEM 4가지의 로그가 존재.
+
 	private static LogType[] sorted = {MAIN,EVENTS,RADIO};
 	private String mValue;
 	private String mTitle;

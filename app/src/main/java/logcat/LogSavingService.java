@@ -102,8 +102,8 @@ public class LogSavingService extends Service {
 				e.printStackTrace();
 			}
 		}
-		
-		Toast.makeText(this, file.toString() + " ������ �Ϸ�Ǿ����ϴ�.", Toast.LENGTH_SHORT).show();
+
+		Toast.makeText(this, file.toString() + " 저장이 완료되었습니다.", Toast.LENGTH_SHORT).show();
 		super.onDestroy();
 	}
 	

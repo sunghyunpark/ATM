@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
+        if(mRealm != null)
         mRealm.close();
     }
     @Override

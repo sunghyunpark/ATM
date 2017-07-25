@@ -14,14 +14,14 @@ public enum PatternFormat {
 	LONG("long", "Long", Pattern.compile("([VDIWEF])/")),
 	RAW("raw", "Raw", null);
 
-	//brief = ����/�±�/PID ��Ŀ��(�⺻ ����)
-	//process = PID�� ���
-	//tag = ����/�±׸� ���
-	//raw = raw �α� �޽��� ���. �ٸ� ��Ÿ������ �ʵ�� �������� �ʴ´�.
-	//time = ���μ����� ���� ��¥, ���೯¥, ����/�±�/PID ����.
-	//thread = ����/�±�/PID/TID ����
-	//threadtime = ��¥, ���೯¥, ����/�±�/PID/TID ����
-	//long = ��� ��Ÿ������ ����.
+	//brief = 레벨/태그/PID 포커싱(기본 포맷)
+	//process = PID만 출력
+	//tag = 레벨/태그만 출력
+	//raw = raw 로그 메시지 출력. 다른 메타데이터 필드는 포함하지 않는다.
+	//time = 프로세스에 대한 날짜, 시행날짜, 레벨/태그/PID 포함.
+	//thread = 레벨/태그/PID/TID 포함
+	//threadtime = 날짜, 시행날짜, 레벨/태그/PID/TID 포함
+	//long = 모든 메타데이터 포함.
 
 	private static PatternFormat[] sorted = {BRIEF,PROCESS,TAG,THREAD,TIME,THREADTIME,LONG,RAW};
 	private String mValue;

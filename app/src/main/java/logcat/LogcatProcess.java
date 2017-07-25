@@ -36,7 +36,7 @@ public class LogcatProcess {
 
 	PatternFormat mFormat = null;
 
-	//�α� ����
+	//로그 갱신
 	private Runnable catRunner = new Runnable() {
 
 		@Override
@@ -85,14 +85,13 @@ public class LogcatProcess {
 			progs.add("logcat");
 			progs.add("-v");
 			progs.add(mFormat.getValue());
-			//logcat -v brief = ����/�±�/PID ��Ŀ��(�⺻ ����)
-			//logcat -v process = PID�� ���
-			//logcat -v tag = ����/�±׸� ���
-			//logcat -v raw = raw �α� �޽��� ���. �ٸ� ��Ÿ������ �ʵ�� �������� �ʴ´�.
-			//logcat -v time = ���μ����� ���� ��¥, ���೯¥, ����/�±�/PID ����.
-			//logcat -v thread = ����/�±�/PID/TID ����
-			//logcat -v threadtime = ��¥, ���೯¥, ����/�±�/PID/TID ����
-			//logcat -v long = ��� ��Ÿ������ ����.
+			//logcat -v brief = 레벨/태그/PID 포커싱(기본 포맷)
+			//logcat -v process = PID만 출력
+			//logcat -v tag = 레벨/태그만 출력
+			//logcat -v raw = raw 로그 메시지 출력. 다른 메타데이터 필드는 포함하지 않는다.
+			//logcat -v time = 프로세스에 대한 날짜, 시행날짜, 레벨/태그/PID 포함.
+			//logcat -v thread = 레벨/태그/PID/TID 포함
+			//logcat -v threadtime = 날짜, 시행날짜, 레벨/태그/PID/TID 포함
 			if (mType != LogType.MAIN) {
 				progs.add("-b");
 				progs.add(mType.getValue());
@@ -125,7 +124,7 @@ public class LogcatProcess {
 				}
 			}
 		} catch (IOException e) {
-			//Log.e("start()", "�α� �б� ����", e);
+			//Log.e("start()", "로그 읽기 실패", e);
 			return;
 		} finally {
 
@@ -138,13 +137,13 @@ public class LogcatProcess {
 					mReader.close();
 					mReader = null;
 				} catch (IOException e) {
-					//Log.d("start()", "��Ʈ�� �ݱ� ����", e);
+					//Log.d("start()", "스트림 닫기 실패", e);
 				}
 			}
 		}
 	}
 
-	//�α� �޽��� �ڵ鷯�� ����.
+	//로그 메시지 핸들러로 전송.
 	private void cat() {
 		Message msg;
 

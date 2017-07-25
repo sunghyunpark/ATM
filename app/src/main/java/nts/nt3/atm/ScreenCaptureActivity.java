@@ -201,7 +201,6 @@ public class ScreenCaptureActivity extends Activity {
                             new String[]{Manifest.permission
                                     .WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO},
                             REQUEST_PERMISSIONS);
-
                 }
             } else {
                 startProjection();

@@ -32,15 +32,15 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 	}
 
 	private void setLevelTitle() {
-		mLogLevelPreference.setTitle("-���� (" + mPrefs.getLevel().getTitle() + ")");
+		mLogLevelPreference.setTitle("-레벨 (" + mPrefs.getLevel().getTitle() + ")");
 	}
 
 	private void setFormatTitle() {
-		mPatternFormatPreference.setTitle("-���� (" + mPrefs.getFormat().getTitle() + ")");
+		mPatternFormatPreference.setTitle("-패턴 (" + mPrefs.getFormat().getTitle() + ")");
 	}
 
 	private void setTypeTitle() {
-		mLogTypePreference.setTitle("-Ÿ�� (" + mPrefs.getType().getTitle() + ")");
+		mLogTypePreference.setTitle("-타입 (" + mPrefs.getType().getTitle() + ")");
 	}
 
 	@Override

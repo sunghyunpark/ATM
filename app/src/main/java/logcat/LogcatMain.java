@@ -70,7 +70,7 @@ public class LogcatMain extends ListActivity {
 	static final int CLEAR_EVT = 2;
 	static final int MAX_COUNT = 1000;
 
-	//��� �α�Ĺ ���/�Ͻ����� ����..
+	//상단 로그캣 재생/일시정지 같음..
 	private Handler mHandler = new Handler() {
 		@SuppressWarnings("unchecked")
 		@Override
@@ -93,7 +93,7 @@ public class LogcatMain extends ListActivity {
 		setContentView(R.layout.logcatmain);
 
 		boolean hasPermission = getPackageManager().checkPermission(Manifest.permission.READ_LOGS, getPackageName()) == PackageManager.PERMISSION_GRANTED;
-		//������ �ִ��� �˻��Ѵ�.
+		//권한이 있는지 검사한다.
 		if(!hasPermission){
 			try {
 				Process process = Runtime.getRuntime().exec("sh",null,null);
@@ -103,12 +103,12 @@ public class LogcatMain extends ListActivity {
 				os.close();
 				if(process.waitFor() != 0){
 					Toast.makeText(this, "Android SDK16 (JellyBean) 이상은\n보안 정책 변경으로 루팅이 필요합니다.", Toast.LENGTH_SHORT).show();
-					//Log.e("error", "grant ���� " + process.exitValue());
+					//Log.e("error", "grant 실패 " + process.exitValue());
 					//android.os.Process.killProcess(android.os.Process.myPid());
 				}
 			} catch (Exception e) {
 				Toast.makeText(this, "Android SDK16 (JellyBean) 이상은\n보안 정책 변경으로 루팅이 필요합니다.", Toast.LENGTH_SHORT).show();
-				//Log.e("error", "���� ȹ�� ����");
+				//Log.e("error", "권한 획득 실패");
 				//android.os.Process.killProcess(android.os.Process.myPid());
 			}
 		}
@@ -321,37 +321,35 @@ public class LogcatMain extends ListActivity {
 		try {
 			Runtime.getRuntime().exec(new String[] { "logcat", "-c" });
 		} catch (IOException e) {
-			Log.e("ExynosLogcat", "로그캣 Clear 실패.", e);
+			Log.e("ATM_Logcat_", "로그캣 Clear 실패.", e);
 		}
 	}
 
 	private File save() {
-		final File path = new File(Environment.getExternalStorageDirectory(),"logcat_dump");
-		final File file = new File(path.getPath() + File.separator + "Exynos_Logcat_" + LogDateFormat.format(new Date()) + ".txt");
-		Log.d("",path.getPath() + File.separator + "Exynos_Logcat_" + LogDateFormat.format(new Date()) + ".txt");
+		final File path = new File(Environment.getExternalStorageDirectory(),"ATM");
+		final File file = new File(path.getPath() + File.separator + "ATM_Logcat_" + LogDateFormat.format(new Date()) + ".txt");
+		Log.d("",path.getPath() + File.separator + "ATM_Logcat_" + LogDateFormat.format(new Date()) + ".txt");
 
 		executor.execute(new Runnable() {
 			@Override
 			public void run() {
 				String content = dump();
-
 				if (!path.exists()) {
 					path.mkdir();
 				}
-
 				BufferedWriter bw = null;
 				try {
 					file.createNewFile();
 					bw = new BufferedWriter(new FileWriter(file), 1024);
 					bw.write(content);
 				} catch (IOException e) {
-					Log.e("ExynosLogcat", "로그 저장 실패.", e);
+					Log.e("ATM_Logcat_", "로그 저장 실패.", e);
 				} finally {
 					if (bw != null) {
 						try {
 							bw.close();
 						} catch (IOException e) {
-							Log.e("ExynosLogcat", "Writer 닫기 실패.", e);
+							Log.e("ATM_Logcat_", "Writer 닫기 실패.", e);
 						}
 					}
 				}
@@ -401,15 +399,26 @@ public class LogcatMain extends ListActivity {
 		switch (resultCode) {
 			case REQUEST_DIALOG:
 				if(data.getExtras().getInt("result") == RESULT_SEARCH){
-					Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_SHORT).show();
+					showDialog(FILTER_DIALOG);
+					break;
 				}else if(data.getExtras().getInt("result") == RESULT_INIT){
-					Toast.makeText(getApplicationContext(), "2", Toast.LENGTH_SHORT).show();
+					clear();
+					reset();
+					break;
 				}else if(data.getExtras().getInt("result") == RESULT_SAVE){
-					Toast.makeText(getApplicationContext(), "3", Toast.LENGTH_SHORT).show();
+					File f = save();
+					String msg = getResources().getString(R.string.saving_log,f.toString());
+					Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+					break;
 				}else if(data.getExtras().getInt("result") == RESULT_SETTING){
-					Toast.makeText(getApplicationContext(), "4", Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent(this, PreferencesActivity.class);
+					startActivity(intent);
+					break;
 				}else if(data.getExtras().getInt("result") == RESULT_OVERLAY){
-					Toast.makeText(getApplicationContext(), "5", Toast.LENGTH_SHORT).show();
+					Intent sintent = new Intent(this,LogOverlayService.class);
+					if(!stopService(sintent))
+						startService(sintent);
+					break;
 				}
 				break;
 
