@@ -77,7 +77,7 @@ public class MailPresenter implements Mailable {
                 {
                     EmailClient email = new EmailClient(gmail,
                             "qalab123");
-                    email.sendMailWithFile(context,"capture",mailTitle, "test",
+                    email.sendMailWithFile(context,mailType,mailTitle, "test",
                             gmail, user_email,
                             path, "atm_capture.png");
 
