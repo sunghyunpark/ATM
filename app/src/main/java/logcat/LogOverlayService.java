@@ -423,7 +423,7 @@ public class LogOverlayService extends Service implements OnTouchListener {
 		executor.execute(new Runnable() {
 			@Override
 			public void run() {
-				mLogcat = new LogcatProcess(LogOverlayService.this, mHandler);
+				mLogcat = new LogcatProcess(LogOverlayService.this, mHandler, false);
 				mLogcat.start();
 			}
 		});

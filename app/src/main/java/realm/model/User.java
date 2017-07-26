@@ -12,6 +12,7 @@ public class User extends RealmObject{
     @PrimaryKey
     private int no;
     private String email;
+    private boolean crashAlarm;
     private boolean send_capture_without_edit;
 
 
@@ -29,6 +30,14 @@ public class User extends RealmObject{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isCrashAlarm() {
+        return crashAlarm;
+    }
+
+    public void setCrashAlarm(boolean crashAlarm) {
+        this.crashAlarm = crashAlarm;
     }
 
     public boolean isSend_capture_without_edit() {

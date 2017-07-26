@@ -78,7 +78,7 @@ public class LogSavingService extends Service {
 			executor.execute(new Runnable() {
 				@Override
 				public void run() {
-					mLogcat = new LogcatProcess(LogSavingService.this, mHandler);
+					mLogcat = new LogcatProcess(LogSavingService.this, mHandler, false);
 					mLogcat.stop();
 					mLogcat.start();
 				}

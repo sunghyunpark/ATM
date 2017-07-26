@@ -3,6 +3,7 @@ package logcat;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,12 +19,15 @@ public class LogcatProcess {
 	private static final long CAT_DELAY = 1;
 
 	private Context mContext;
+	private boolean crashAlarmMode;
+	private boolean crash_flag = false;
 	private Handler mHandler;
 	private Process mlogcatProc;
 	private ScheduledExecutorService mExecutor;
 	private String mFilter = null;
 	private BufferedReader mReader = null;
 	private ArrayList<String> mLogCache = new ArrayList<String>();
+	private ArrayList<String> mCrashLog = new ArrayList<String>();
 	private boolean mRunning = false;
 	private boolean mIsFilterPattern;
 	private boolean mPlay = true;
@@ -53,9 +57,9 @@ public class LogcatProcess {
 		}
 	};
 
-	public LogcatProcess(Context context, Handler handler) {
+	public LogcatProcess(Context context, Handler handler, boolean AlarmMode) {
 		mHandler = handler;
-		
+		crashAlarmMode = AlarmMode;
 		mContext = context;
 		mPrefs = new Preferences(mContext);
 
@@ -70,7 +74,7 @@ public class LogcatProcess {
 	//�α�Ĺ ����
 	public void start() {
 		stop();
-
+		Log.d("LogcatProcess", "Logcat start");
 		mRunning = true;
 
 		mExecutor = Executors.newScheduledThreadPool(1);
@@ -103,7 +107,17 @@ public class LogcatProcess {
 			mReader = new BufferedReader(new InputStreamReader(mlogcatProc.getInputStream()), 1024);
 
 			String line;
+			mCrashLog.clear();
 			while (mRunning && (line = mReader.readLine()) != null) {
+				if(crashAlarmMode){
+					if(line.contains("E/AndroidRuntime")){
+						crash_flag = true;
+						Log.d("LogcatProcess", "Crash!!!!");
+						mCrashLog.add(line);
+						mCrashLog.add("\n");
+						continue;
+					}
+				}
 				if (!mRunning) {
 					break;
 				}
@@ -150,10 +164,20 @@ public class LogcatProcess {
 		if (mLogCache.size() > 0) {
 			synchronized (mLogCache) {
 				if (mLogCache.size() > 0) {
-					msg = Message.obtain(mHandler, LogcatMain.CAT_EVT);
-					msg.obj = mLogCache.clone();
-					mLogCache.clear();
-					mHandler.sendMessage(msg);					
+					if(crash_flag){
+						Log.d("LogcatProcess", "crash");
+						msg = Message.obtain(mHandler, CrashAlarmService.CRASH_CAT);
+						msg.obj = mCrashLog.clone();
+						mCrashLog.clear();
+						mHandler.sendMessage(msg);
+						mHandler.sendEmptyMessage(3);
+						crash_flag = false;
+					}else{
+						msg = Message.obtain(mHandler, LogcatMain.CAT_EVT);
+						msg.obj = mLogCache.clone();
+						mLogCache.clear();
+						mHandler.sendMessage(msg);
+					}
 				}
 			}
 		}

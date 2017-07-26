@@ -8,9 +8,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- 로그캣-->
+    <!-- 로그캣 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
-
 
     <application
         android:name=".ATMApplication"
@@ -50,22 +49,24 @@
         <activity
             android:name="logcat.PreferencesActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="logcat.LogcatMain"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="logcat.LogcatSetting_Dialog"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Dialog" >
-        </activity>
+            android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".ApkMangerActivity" />
         <activity android:name=".WriteActivity" />
-        <activity android:name=".ApkInfoActivity"></activity>
+        <activity android:name=".ApkInfoActivity" />
+
+        <service
+            android:name="logcat.CrashAlarmService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import io.realm.Realm;
+import logcat.CrashAlarmService;
 import realm.model.User;
 import service.NdeployAlarmService;
 
@@ -36,7 +37,8 @@ public class SettingPresenter implements SettingInterface {
 
     @Override
     public void AlarmCrash(){
-
+        Intent intent = new Intent(context, CrashAlarmService.class);
+        context.startService(intent);
     }
 
     @Override

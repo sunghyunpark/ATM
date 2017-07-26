@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import io.realm.Realm;
+import logcat.CrashAlarmService;
 import presenter.SettingPresenter;
 import realm.RealmConfig;
 import realm.model.User;
@@ -82,6 +83,24 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        final Switch CrashSwitch = (Switch)findViewById(R.id.crash_switch);
+        if(Crash_AlarmRunningCheck()){
+            CrashSwitch.setChecked(true);
+        }else{
+            CrashSwitch.setChecked(false);
+        }
+
+        CrashSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    settingPresenter.AlarmCrash();
+                }else{
+                    stopService(new Intent(getApplicationContext(), CrashAlarmService.class));
+                }
+            }
+        });
+
         final Switch NdeploySwitch = (Switch)findViewById(R.id.ndeploy_switch);
         if(Ndeploy_AlarmRunningCheck()){
             NdeploySwitch.setChecked(true);
@@ -139,6 +158,15 @@ public class SettingActivity extends AppCompatActivity {
         ActivityManager manager = (ActivityManager) this.getSystemService(Activity.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if ("service.NdeployAlarmService".equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean Crash_AlarmRunningCheck() {
+        ActivityManager manager = (ActivityManager) this.getSystemService(Activity.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if ("logcat.CrashAlarmService".equals(service.service.getClassName())) {
                 return true;
             }
         }

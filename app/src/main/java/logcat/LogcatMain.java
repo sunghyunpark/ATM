@@ -201,7 +201,7 @@ public class LogcatMain extends ListActivity {
 		executor.execute(new Runnable() {
 			@Override
 			public void run() {
-				mLogcat = new LogcatProcess(LogcatMain.this, mHandler);
+				mLogcat = new LogcatProcess(LogcatMain.this, mHandler, false);
 				mLogcat.start();
 			}
 		});
