@@ -6,6 +6,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -34,6 +35,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import nts.nt3.atm.R;
+import presenter.MailPresenter;
 
 public class LogcatMain extends ListActivity {
 
@@ -288,9 +290,8 @@ public class LogcatMain extends ListActivity {
 			showDialog(FILTER_DIALOG);
 			return true;
 		case MENU_SAVE:
-			File f = save();
-			String msg = getResources().getString(R.string.saving_log,f.toString());
-			Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+			save();
+
 			return true;
 		case MENU_PLAY:
 			if (mPlay) {
@@ -325,38 +326,60 @@ public class LogcatMain extends ListActivity {
 		}
 	}
 
-	private File save() {
-		final File path = new File(Environment.getExternalStorageDirectory(),"ATM");
-		final File file = new File(path.getPath() + File.separator + "ATM_Logcat_" + LogDateFormat.format(new Date()) + ".txt");
-		Log.d("",path.getPath() + File.separator + "ATM_Logcat_" + LogDateFormat.format(new Date()) + ".txt");
+	private class SaveAndSendTask extends AsyncTask<String, String, String> {
+		File path;
+		String fileName;
+		File file;
 
-		executor.execute(new Runnable() {
-			@Override
-			public void run() {
-				String content = dump();
-				if (!path.exists()) {
-					path.mkdir();
-				}
-				BufferedWriter bw = null;
-				try {
-					file.createNewFile();
-					bw = new BufferedWriter(new FileWriter(file), 1024);
-					bw.write(content);
-				} catch (IOException e) {
-					Log.e("ATM_Logcat_", "로그 저장 실패.", e);
-				} finally {
-					if (bw != null) {
-						try {
-							bw.close();
-						} catch (IOException e) {
-							Log.e("ATM_Logcat_", "Writer 닫기 실패.", e);
-						}
+		@Override
+		protected void onPreExecute(){
+			super.onPreExecute();
+			path = new File(Environment.getExternalStorageDirectory(),"ATM");
+			fileName = "ATM_Logcat_" + LogDateFormat.format(new Date()) + ".txt";
+			file = new File(path.getPath() + File.separator + fileName);
+		}
+
+		@Override
+		protected String doInBackground(String... data){
+			String content = dump();
+			if (!path.exists()) {
+				path.mkdir();
+			}
+			BufferedWriter bw = null;
+			try {
+				file.createNewFile();
+				bw = new BufferedWriter(new FileWriter(file), 1024);
+				bw.write(content);
+			} catch (IOException e) {
+				Log.e("ATM_Logcat_", "로그 저장 실패.", e);
+			} finally {
+				if (bw != null) {
+					try {
+						bw.close();
+					} catch (IOException e) {
+						Log.e("ATM_Logcat_", "Writer 닫기 실패.", e);
 					}
 				}
 			}
-		});
+			return null;
+		}
 
-		return file;
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+		}
+
+		@Override
+		protected void onPostExecute(String result){
+			MailPresenter mailPresenter = new MailPresenter(getApplicationContext());
+			mailPresenter.SendBtn("logcat", Environment.getExternalStorageDirectory()+"/ATM/"+ fileName);
+			Toast.makeText(getApplicationContext(), "메일 전송 완료", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private void save() {
+		SaveAndSendTask saveAndSendTask = new SaveAndSendTask();
+		saveAndSendTask.execute("");
 	}
 
 	private String dump() {
@@ -406,9 +429,7 @@ public class LogcatMain extends ListActivity {
 					reset();
 					break;
 				}else if(data.getExtras().getInt("result") == RESULT_SAVE){
-					File f = save();
-					String msg = getResources().getString(R.string.saving_log,f.toString());
-					Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+					save();
 					break;
 				}else if(data.getExtras().getInt("result") == RESULT_SETTING){
 					Intent intent = new Intent(this, PreferencesActivity.class);

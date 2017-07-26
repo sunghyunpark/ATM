@@ -15,7 +15,7 @@ import util.GmailAddress;
 /**
  * Created by Sunghyun on 2017. 7. 12..
  * ATM 내에서 메일 보내는 동작은 모두 여기서 하도록함.
- * mailType -> capture / record / log
+ * mailType -> capture / record / logcat
  */
 
 public class MailPresenter implements Mailable {
@@ -60,7 +60,7 @@ public class MailPresenter implements Mailable {
                 mailTitle = "ATM_CAPTURE";
             }else if(mailType.equals("record")){
                 mailTitle = "ATM_RECORD";
-            }else if(mailType.equals("log")){
+            }else if(mailType.equals("logcat")){
                 mailTitle = "ATM_CRASH_LOG";
             }
 
@@ -73,6 +73,8 @@ public class MailPresenter implements Mailable {
                 String gmail = gmailAddress.GetGmail_ID();
                 Log.d("ATM_EMAIL", "Gmail ID : "+gmail);
                 Log.d("ATM_EMAIL", "User ID : "+user_email);
+                Log.d("ATM_EMAIL", "MailType : "+mailType);
+                Log.d("ATM_EMAIL", "PATH : "+path);
                 try
                 {
                     EmailClient email = new EmailClient(gmail,

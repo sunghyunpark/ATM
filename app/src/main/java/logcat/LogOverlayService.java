@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -36,6 +37,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import nts.nt3.atm.R;
+import presenter.MailPresenter;
 
 public class LogOverlayService extends Service implements OnTouchListener {
 
@@ -308,9 +310,7 @@ public class LogOverlayService extends Service implements OnTouchListener {
 		}
 		else if(v.equals(SaveBtn)){
 			if (event.getAction() == MotionEvent.ACTION_DOWN){
-				File f = save();
-				String msg = getResources().getString(R.string.saving_log,f.toString());
-				Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+				save();
 			}
 		}
 		else if(v.equals(ClearBtn)){
@@ -465,41 +465,59 @@ public class LogOverlayService extends Service implements OnTouchListener {
 			Log.e("ExynosLogcat", "로그캣 Clear 실패.", e);
 		}
 	}
+	private class SaveAndSendTask extends AsyncTask<String, String, String> {
+		File path;
+		String fileName;
+		File file;
 
-	private File save() {
-		final File path = new File(Environment.getExternalStorageDirectory(),"ATM");
-		final File file = new File(path.getPath() + File.separator + "ATM_Logcat_" + LogcatMain.LogDateFormat.format(new Date()) + ".txt");
-		Log.d("",path.getPath() + File.separator + "ATM_Logcat_" + LogcatMain.LogDateFormat.format(new Date()) + ".txt");
+		@Override
+		protected void onPreExecute(){
+			super.onPreExecute();
+			path = new File(Environment.getExternalStorageDirectory(),"ATM");
+			fileName = "ATM_Logcat_" + LogcatMain.LogDateFormat.format(new Date()) + ".txt";
+			file = new File(path.getPath() + File.separator + fileName);
+		}
 
-		executor.execute(new Runnable() {
-			@Override
-			public void run() {
-				String content = dump();
-
-				if (!path.exists()) {
-					path.mkdir();
-				}
-
-				BufferedWriter bw = null;
-				try {
-					file.createNewFile();
-					bw = new BufferedWriter(new FileWriter(file), 1024);
-					bw.write(content);
-				} catch (IOException e) {
-					Log.e("ExynosLogcat", "로그 저장 실패.", e);
-				} finally {
-					if (bw != null) {
-						try {
-							bw.close();
-						} catch (IOException e) {
-							Log.e("ExynosLogcat", "Writer 닫기 실패.", e);
-						}
+		@Override
+		protected String doInBackground(String... data){
+			String content = dump();
+			if (!path.exists()) {
+				path.mkdir();
+			}
+			BufferedWriter bw = null;
+			try {
+				file.createNewFile();
+				bw = new BufferedWriter(new FileWriter(file), 1024);
+				bw.write(content);
+			} catch (IOException e) {
+				Log.e("ATM_Logcat_", "로그 저장 실패.", e);
+			} finally {
+				if (bw != null) {
+					try {
+						bw.close();
+					} catch (IOException e) {
+						Log.e("ATM_Logcat_", "Writer 닫기 실패.", e);
 					}
 				}
 			}
-		});
+			return null;
+		}
 
-		return file;
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+		}
+
+		@Override
+		protected void onPostExecute(String result){
+			MailPresenter mailPresenter = new MailPresenter(getApplicationContext());
+			mailPresenter.SendBtn("logcat", Environment.getExternalStorageDirectory()+"/ATM/"+ fileName);
+			Toast.makeText(getApplicationContext(), "메일 전송 완료", Toast.LENGTH_SHORT).show();
+		}
+	}
+	private void save() {
+		SaveAndSendTask saveAndSendTask = new SaveAndSendTask();
+		saveAndSendTask.execute("");
 	}
 
 	private String dump() {
