@@ -38,4 +38,18 @@ public class RealmConfig{
         return config;
 
     }
+
+    public RealmConfiguration Memo_DefaultRealmVersion(Context context){
+
+        Realm.init(context);    //realm 초기화
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("Memo.realm")
+                .schemaVersion(1)
+                .deleteRealmIfMigrationNeeded()
+                //.migration(new Migration())
+                .build();
+
+        return config;
+
+    }
 }

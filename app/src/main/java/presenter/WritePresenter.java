@@ -1,7 +1,11 @@
 package presenter;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import io.realm.Realm;
 import realm.model.DownLoadLink;
+import realm.model.Memo;
 
 /**
  * Created by NAVER on 2017-07-22.
@@ -33,7 +37,20 @@ public class WritePresenter implements Writeable{
                 mRealm.commitTransaction();
             }
         }else{
+            Memo memoVO = new Memo();
+            String created_at = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            try{
+                mRealm.beginTransaction();
+                memoVO.setNo(no);
+                memoVO.setMemoTitle(title);
+                memoVO.setMemoContents(contents);
+                memoVO.setCreated_at(created_at);
+            }catch (Exception e){
 
+            }finally {
+                mRealm.copyToRealmOrUpdate(memoVO);
+                mRealm.commitTransaction();
+            }
         }
     }
 

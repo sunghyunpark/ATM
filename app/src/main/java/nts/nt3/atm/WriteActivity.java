@@ -16,6 +16,7 @@ import io.realm.Realm;
 import presenter.WritePresenter;
 import realm.RealmConfig;
 import realm.model.DownLoadLink;
+import realm.model.Memo;
 
 public class WriteActivity extends AppCompatActivity {
 
@@ -53,7 +54,11 @@ public class WriteActivity extends AppCompatActivity {
 
     private void InitView(){
         realmConfig = new RealmConfig();
-        mRealm = Realm.getInstance(realmConfig.DownLoad_DefaultRealmVersion(getApplicationContext()));
+        if(flag.equals("Link") || flag.equals("EditLink")){
+            mRealm = Realm.getInstance(realmConfig.DownLoad_DefaultRealmVersion(getApplicationContext()));
+        }else{
+            mRealm = Realm.getInstance(realmConfig.Memo_DefaultRealmVersion(getApplicationContext()));
+        }
         writePresenter = new WritePresenter();
 
         ImageView backBtn = (ImageView)findViewById(R.id.back_btn);
@@ -91,7 +96,7 @@ public class WriteActivity extends AppCompatActivity {
             if(flag.equals("Link")){
                 key = mRealm.where(DownLoadLink.class).max("no").intValue() + 1;
             }else{
-                key = mRealm.where(DownLoadLink.class).max("no").intValue() + 1;
+                key = mRealm.where(Memo.class).max("no").intValue() + 1;
             }
         } catch(ArrayIndexOutOfBoundsException ex) {
             key = 0;

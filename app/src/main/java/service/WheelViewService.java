@@ -23,6 +23,7 @@ import com.lukedeighton.wheelview.adapter.WheelAdapter;
 
 import logcat.LogcatMain;
 import nts.nt3.atm.ApkMangerActivity;
+import nts.nt3.atm.MemoActivity;
 import nts.nt3.atm.ScreenCaptureActivity;
 import nts.nt3.atm.ScreenRecordActivity;
 import nts.nt3.atm.ATMApplication;
@@ -163,7 +164,10 @@ public class WheelViewService extends Service implements Wheelable{
     //memo
     @Override
     public void startMemo(){
-        Toast.makeText(getApplicationContext(), "startMemo", Toast.LENGTH_SHORT).show();
+        stopService();
+        Intent intent_memo = new Intent(getApplicationContext(), MemoActivity.class);
+        intent_memo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent_memo);
     }
     //logcat
     @Override
