@@ -1,5 +1,6 @@
 package logcat;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import nts.nt3.atm.R;
 import presenter.MailPresenter;
 
 public class CrashAlarmService extends Service {
@@ -64,6 +66,16 @@ public class CrashAlarmService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Init();
+
+        Notification.Builder builder = new Notification.Builder(getApplicationContext())
+                .setSmallIcon(R.mipmap.crashalarm_img)
+                .setContentTitle("Crash 알리미")
+                .setContentText("로그 분석중")
+                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
+        Notification notification = builder.build();
+        notification.flags = notification.flags | notification.FLAG_AUTO_CANCEL;
+
+        startForeground(1, notification);
         return START_STICKY;
     }
 
