@@ -71,7 +71,13 @@ public class WritePresenter implements Writeable{
             downLoadLink.setLinkUrl(contents);
             mRealm.commitTransaction();
         }else if(flag.equals("EditMemo")){
-
+            String created_at = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            Memo memo = mRealm.where(Memo.class).equalTo("no",no).findFirst();
+            mRealm.beginTransaction();
+            memo.setMemoTitle(title);
+            memo.setMemoContents(contents);
+            memo.setCreated_at(created_at);
+            mRealm.commitTransaction();
         }
     }
 

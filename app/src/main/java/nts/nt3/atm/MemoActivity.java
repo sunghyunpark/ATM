@@ -60,6 +60,9 @@ public class MemoActivity extends AppCompatActivity {
 
         ImageView writeBtn = (ImageView)findViewById(R.id.write_memo_btn);
         writeBtn.setOnTouchListener(myOnTouchListener);
+
+        ImageView backBtn = (ImageView)findViewById(R.id.back_btn);
+        backBtn.setOnTouchListener(myOnTouchListener);
     }
 
     private void SetList(){
@@ -117,6 +120,17 @@ public class MemoActivity extends AppCompatActivity {
                 final MemoModel currentItem = getItem(position);
                 final VHitem_items VHitem = (VHitem_items)holder;
 
+                VHitem.item_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), WriteActivity.class);
+                        intent.putExtra("flag", "EditMemo");
+                        intent.putExtra("no", currentItem.getNo());
+                        intent.putExtra("EditTitle", currentItem.getMemoTitle());
+                        intent.putExtra("EditContent", currentItem.getMemoContents());
+                        startActivity(intent);
+                    }
+                });
                 VHitem.memo_title_txt.setText(currentItem.getMemoTitle());
                 VHitem.memo_contents_txt.setText(currentItem.getMemoContents());
                 VHitem.created_at.setText(currentItem.getCreated_at());
@@ -124,12 +138,14 @@ public class MemoActivity extends AppCompatActivity {
         }
 
         private class VHitem_items extends RecyclerView.ViewHolder{
+            ViewGroup item_layout;
             TextView memo_title_txt;
             TextView memo_contents_txt;
             TextView created_at;
 
             private VHitem_items(View itemView) {
                 super(itemView);
+                item_layout = (ViewGroup)itemView.findViewById(R.id.item_layout);
                 memo_title_txt = (TextView)itemView.findViewById(R.id.memo_title_txt);
                 memo_contents_txt = (TextView)itemView.findViewById(R.id.memo_contents_txt);
                 created_at = (TextView)itemView.findViewById(R.id.created_at);
