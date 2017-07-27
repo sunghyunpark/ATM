@@ -87,6 +87,7 @@
     <!--ApkManagerActivity-->
     <string name="apk_manager_activity_title_txt">앱관리</string>
     <string name="apk_manager_activity_download_btn_txt">다운로드 링크</string>
+    <string name="apk_manager_activity_download_empty_txt">등록된 Ndeploy 최신버전 링크가 없습니다.</string>
     <string name="apk_manager_activity_setting_btn_txt">설정</string>
 
     <!--WriteActivity-->

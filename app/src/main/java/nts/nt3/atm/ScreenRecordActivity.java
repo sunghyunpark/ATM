@@ -84,6 +84,11 @@ public class ScreenRecordActivity extends AppCompatActivity {
 
 
         mToggleButton = (ToggleButton) findViewById(R.id.toggle);
+        if(ATMApplication.recordState){
+            mToggleButton.setChecked(true);
+        }else{
+            mToggleButton.setChecked(false);
+        }
         if(mToggleButton.isChecked()){
             mToggleButton.setTextColor(getResources().getColor(R.color.colorAccent));
         }else{

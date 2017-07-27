@@ -74,18 +74,24 @@ public class ApkManagerDownloadFragment extends Fragment {
     private void SetList(){
         listItems = new ArrayList<DownLinkModel>();
         RealmResults<DownLoadLink> dataList = mRealm.where(DownLoadLink.class).findAll();
+        TextView empty_txt = (TextView)v.findViewById(R.id.empty_txt);
 
         int dataSize = dataList.size();
-        DownLinkModel downLinkModel;
-        for(int i=0;i<dataSize;i++){
-            downLinkModel = new DownLinkModel();
-            downLinkModel.setNo(dataList.get(i).getNo());
-            downLinkModel.setLinkTitle(dataList.get(i).getLinkTitle());
-            downLinkModel.setLinkUrl(dataList.get(i).getLinkUrl());
-            listItems.add(downLinkModel);
+        if(dataSize > 0){
+            empty_txt.setVisibility(View.GONE);
+            DownLinkModel downLinkModel;
+            for(int i=0;i<dataSize;i++){
+                downLinkModel = new DownLinkModel();
+                downLinkModel.setNo(dataList.get(i).getNo());
+                downLinkModel.setLinkTitle(dataList.get(i).getLinkTitle());
+                downLinkModel.setLinkUrl(dataList.get(i).getLinkUrl());
+                listItems.add(downLinkModel);
+            }
+            adapter = new RecyclerAdapter(listItems);
+            recyclerView.setAdapter(adapter);
+        }else{
+            empty_txt.setVisibility(View.VISIBLE);
         }
-        adapter = new RecyclerAdapter(listItems);
-        recyclerView.setAdapter(adapter);
     }
 
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
