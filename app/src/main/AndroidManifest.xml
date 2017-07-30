@@ -67,8 +67,13 @@
             android:name="logcat.CrashAlarmService"
             android:enabled="true"
             android:exported="true" />
-
-        <activity android:name=".MemoActivity"></activity>
+        <service
+            android:name=".ServiceReader"
+            android:enabled="true"
+            android:exported="true" />
+        <activity android:name=".MemoActivity"/>
+        <activity android:name=".PerformanceActivity" />
+        <activity android:name=".ActivityProcesses" />
     </application>
 
 </manifest>

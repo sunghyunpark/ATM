@@ -160,7 +160,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.help_btn:
-
+                        Intent intent = new Intent(getApplicationContext(), PerformanceActivity.class);
+                        startActivity(intent);
                         break;
                 }
             }
