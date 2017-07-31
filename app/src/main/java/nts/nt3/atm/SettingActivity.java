@@ -141,7 +141,7 @@ public class SettingActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     // Canceled.
-
+                                    NdeploySwitch.setChecked(false);
                                 }
                             });
                     alert.show();
