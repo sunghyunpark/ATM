@@ -18,7 +18,7 @@
     <string name="wheel_view_item5">앱관리</string>
     <string name="wheel_view_item6">홈</string>
     <string name="wheel_view_item7">AUTO</string>
-    <string name="wheel_view_item8">성능측정</string>
+    <string name="wheel_view_item8">성능 측정</string>
     <string name="wheel_view_item9">숨기기</string>
 
     <!--Edit Capture Activity-->
@@ -131,9 +131,12 @@
     <string name="performance_activity_title">측정</string>
     <string name="performance_activity_on">측정하기</string>
     <string name="performance_activity_off">중지</string>
+    <string name="processes_activity_title">Processes</string>
+    <string name="performance_activity_back_dialog_title">종료</string>
+    <string name="performance_activity_back_dialog_contents">측정을 종료하시겠습니까? \n측정을 종료하지 않으면 측정이 계속 유지됩니다.</string>
     <string name="anim_time">100</string>
     <string name="notify_read">ATM is reading values</string>
-    <string name="notify_read2">Reading values in the background</string>
+    <string name="notify_read2">CPU/MEMORY 측정 중</string>
     <string name="notify_record">ATM is recording values</string>
     <string name="notify_record2">Recording values in the background</string>
     <string name="notify_toast_saved">saved in the folder \'ATM\'.</string>

@@ -179,7 +179,7 @@ public class ActivityProcesses extends Activity {
 			mLV.setVisibility(View.GONE);
 			findViewById(R.id.LProcessesProblem).setVisibility(View.VISIBLE);
 			((TextView)findViewById(R.id.TVError)).setText(R.string.w_processes_android_51_problem);
-			findViewById(R.id.BOK).setClickable(false);
+			findViewById(R.id.ok_btn).setClickable(false);
 			return;
 		}
 
@@ -212,7 +212,7 @@ public class ActivityProcesses extends Activity {
 			}
 		});
 
-        findViewById(R.id.BOK).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ok_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListSelected.size() != 0) {

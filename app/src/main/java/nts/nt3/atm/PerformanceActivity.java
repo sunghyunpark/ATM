@@ -15,10 +15,12 @@ import android.animation.LayoutTransition;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -1415,8 +1417,34 @@ public class PerformanceActivity extends Activity {
 			mCloseSettings.performClick();
 			return;
 		}
-
 		super.onBackPressed();
+	}
+
+	private void BackDialog(){
+		final Resources res = getResources();
+		AlertDialog.Builder alert = new AlertDialog.Builder(PerformanceActivity.this);
+
+		alert.setTitle(res.getString(R.string.performance_activity_back_dialog_title));
+		alert.setMessage(res.getString(R.string.performance_activity_back_dialog_contents));
+
+		alert.setPositiveButton("유지", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				finish();
+			}
+		});
+
+		alert.setNegativeButton("종료",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						// Canceled.
+						if(ATMApplication.performanceState)
+							ATMApplication.performanceState = false;
+						stopService(new Intent(getApplicationContext(), ServiceReader.class));
+                        finish();
+					}
+				});
+
+		alert.show();
 	}
 
 	/**
@@ -1433,9 +1461,8 @@ public class PerformanceActivity extends Activity {
 			} else if (event.getAction() == MotionEvent.ACTION_UP) {
 				v.setAlpha(1.0f);
 				switch(v.getId()){
-
 					case R.id.back_btn:
-						finish();
+                        BackDialog();
 						break;
 				}
 			}
@@ -1443,13 +1470,14 @@ public class PerformanceActivity extends Activity {
 		}
 	};
 
-
-
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		if (keyCode ==  KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0) {
 			mPWMenu.setAnimationStyle(R.style.Animations_PopDownMenuBottom);
 			mPWMenu.showAtLocation(mLParent, Gravity.BOTTOM | Gravity.CENTER,  0, 0);
+			return true;
+		}else if(keyCode == KeyEvent.KEYCODE_BACK){
+			BackDialog();
 			return true;
 		}
 		return super.onKeyUp(keyCode, event);

@@ -191,7 +191,7 @@ public class ServiceReader extends Service {
 				.setContentTitle(getString(R.string.app_name))
 				.setContentText(getString(R.string.notify_read2))
 //				.setTicker(getString(R.string.notify_read))
-				.setSmallIcon(R.mipmap.app_icon)
+				.setSmallIcon(R.mipmap.performance_icon_48dp)
 				.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon, null))
 				.setWhen(0) // Removes the time
 				.setOngoing(true)
@@ -205,7 +205,7 @@ public class ServiceReader extends Service {
 				.setContentTitle(getString(R.string.app_name))
 				.setContentText(getString(R.string.notify_record2))
 				.setTicker(getString(R.string.notify_record))
-				.setSmallIcon(R.mipmap.app_icon)
+				.setSmallIcon(R.mipmap.performance_icon_48dp)
 				.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon, null))
 				.setWhen(0)
 				.setOngoing(true)
