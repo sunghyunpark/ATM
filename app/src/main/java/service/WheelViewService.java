@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.IBinder;
 import android.view.Display;
 import android.view.Gravity;
@@ -24,6 +25,7 @@ import com.lukedeighton.wheelview.adapter.WheelAdapter;
 import logcat.LogcatMain;
 import nts.nt3.atm.ApkMangerActivity;
 import nts.nt3.atm.MemoActivity;
+import nts.nt3.atm.PerformanceActivity;
 import nts.nt3.atm.ScreenCaptureActivity;
 import nts.nt3.atm.ScreenRecordActivity;
 import nts.nt3.atm.ATMApplication;
@@ -36,7 +38,7 @@ import nts.nt3.atm.R;
 
 public class WheelViewService extends Service implements Wheelable{
 
-    private static final int ITEM_COUNT = 8;                //wheel item 갯수
+    private static final int ITEM_COUNT = 9;                //wheel item 갯수
     private RelativeLayout wheel_layout;
     private TextView wheel_item_txt;
     //onTopService view
@@ -118,6 +120,9 @@ public class WheelViewService extends Service implements Wheelable{
                     case 7:
                         drawable = getResources().getDrawable(R.mipmap.wheel_icon8);
                         break;
+                    case 8:
+                        drawable = getResources().getDrawable(R.mipmap.wheel_icon9);
+                        break;
                 }
                 return drawable;
             }
@@ -137,29 +142,39 @@ public class WheelViewService extends Service implements Wheelable{
     //capture
     @Override
     public void startCapture(){
-        stopService();
-        Thread th = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                    Intent intent = new Intent(getApplicationContext(), ScreenCaptureActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }catch (InterruptedException e){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            //사용가능한 버전이 아님
+            Toast.makeText(getApplicationContext(),"Lollipop(5.0)이상만 가능합니다.", Toast.LENGTH_SHORT).show();
+        }else{
+            stopService();
+            Thread th = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                        Intent intent = new Intent(getApplicationContext(), ScreenCaptureActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }catch (InterruptedException e){
 
+                    }
                 }
-            }
-        });
-        th.start();
+            });
+            th.start();
+        }
     }
     //record
     @Override
     public void startRecord(){
-        stopService();
-        Intent intent = new Intent(getApplicationContext(), ScreenRecordActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            //사용가능한 버전이 아님
+            Toast.makeText(getApplicationContext(),"Lollipop(5.0)이상만 가능합니다.", Toast.LENGTH_SHORT).show();
+        }else{
+            stopService();
+            Intent intent = new Intent(getApplicationContext(), ScreenRecordActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
     //memo
     @Override
@@ -197,6 +212,14 @@ public class WheelViewService extends Service implements Wheelable{
     @Override
     public void startAuto(){
         Toast.makeText(getApplicationContext(), "startAuto", Toast.LENGTH_SHORT).show();
+    }
+    //performance
+    @Override
+    public void startPerformance(){
+        stopService();
+        Intent intent = new Intent(getApplicationContext(), PerformanceActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
     //stop
     @Override
@@ -267,6 +290,9 @@ public class WheelViewService extends Service implements Wheelable{
                 case 7:
                     wheel_item_txt.setText(res.getString(R.string.wheel_view_item8));
                     break;
+                case 8:
+                    wheel_item_txt.setText(res.getString(R.string.wheel_view_item9));
+                    break;
 
             }
         }
@@ -300,6 +326,9 @@ public class WheelViewService extends Service implements Wheelable{
                     startAuto();
                     break;
                 case 7:
+                    startPerformance();
+                    break;
+                case 8:
                     stopService();
                     break;
             }

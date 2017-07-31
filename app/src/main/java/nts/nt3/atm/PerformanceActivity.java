@@ -147,6 +147,8 @@ public class PerformanceActivity extends Activity {
 								mVG.unlockCanvasAndPost(canvas);
 							} catch (java.lang.IllegalStateException e) {
 								Log.w("Activity main: ", e.getMessage());
+							} catch (java.lang.IllegalArgumentException a){
+								Log.w("Performance", a.getMessage());
 							}
 
 							canvasLocked = false;
@@ -156,7 +158,8 @@ public class PerformanceActivity extends Activity {
 			};
 			mThread.start();
 		}
-	}/*, drawRunnableGraphic = new Runnable() {
+	}
+	/*, drawRunnableGraphic = new Runnable() {
 		@Override
 		public void run() {
 			Canvas canvas;

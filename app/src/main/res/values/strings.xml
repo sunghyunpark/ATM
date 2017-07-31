@@ -18,7 +18,8 @@
     <string name="wheel_view_item5">앱관리</string>
     <string name="wheel_view_item6">홈</string>
     <string name="wheel_view_item7">AUTO</string>
-    <string name="wheel_view_item8">숨기기</string>
+    <string name="wheel_view_item8">성능측정</string>
+    <string name="wheel_view_item9">숨기기</string>
 
     <!--Edit Capture Activity-->
     <string name="edit_capture_title_txt">캡쳐</string>
@@ -44,6 +45,7 @@
     <!--error toast-->
     <string name="not_exist_info_txt">정보를 입력해주세요.</string>
     <string name="not_email_format_txt">올바른 이메일 형식이 아닙니다.</string>
+    <string name="for_lollipop_txt">Lollipop(5.0)이상만 가능합니다.</string>
 
     <!--Ndeploy Alarm -->
     <string name="ndeploy_alarm_push_title">최신 빌드</string>

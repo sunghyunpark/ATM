@@ -13,5 +13,6 @@ public interface Wheelable {
     void startManageApp();    // 앱 관리
     void startHome();    // 홈 화면
     void startAuto();    // 매크로
+    void startPerformance();    //성능측정
     void stopService();    // 숨기기
 }
