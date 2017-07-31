@@ -41,6 +41,7 @@ import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -144,7 +145,7 @@ public class PerformanceActivity extends Activity {
 							// http://stackoverflow.com/questions/23893813/canvas-restore-causing-underflow-exception-in-very-rare-cases
 							try {
 								mVG.unlockCanvasAndPost(canvas);
-							} catch (IllegalStateException e) {
+							} catch (java.lang.IllegalStateException e) {
 								Log.w("Activity main: ", e.getMessage());
 							}
 
@@ -263,6 +264,9 @@ public class PerformanceActivity extends Activity {
 		startService(new Intent(this, ServiceReader.class));
 		setContentView(R.layout.activity_performance);
 
+
+		ImageView backBtn = (ImageView)findViewById(R.id.back_btn);
+		backBtn.setOnTouchListener(myOnTouchListener);
 		mPrefs = getSharedPreferences(getString(R.string.app_name) + C.prefs, MODE_PRIVATE);
 		intervalRead = mPrefs.getInt(C.intervalRead, C.defaultIntervalUpdate);
 		intervalUpdate = mPrefs.getInt(C.intervalUpdate, C.defaultIntervalUpdate);
@@ -1402,7 +1406,29 @@ public class PerformanceActivity extends Activity {
 		super.onBackPressed();
 	}
 
+	/**
+	 * 각 버튼들 이벤트
+	 */
+	private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
 
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			if (event.getAction() == MotionEvent.ACTION_DOWN) {
+				v.setAlpha(0.55f);
+			}else if(event.getAction() == MotionEvent.ACTION_CANCEL){
+				v.setAlpha(1.0f);
+			} else if (event.getAction() == MotionEvent.ACTION_UP) {
+				v.setAlpha(1.0f);
+				switch(v.getId()){
+
+					case R.id.back_btn:
+						finish();
+						break;
+				}
+			}
+			return true;
+		}
+	};
 
 
 

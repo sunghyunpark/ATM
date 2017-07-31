@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
             //service off
             start_btn.setText("START");
         }
+        Button performance_btn = (Button)findViewById(R.id.performance_btn);
+        performance_btn.setOnTouchListener(myOnTouchListener);
         Button logcat_btn = (Button)findViewById(R.id.logcat_btn);
         logcat_btn.setOnTouchListener(myOnTouchListener);
         Button app_setting_btn = (Button)findViewById(R.id.app_setting_btn);
@@ -144,6 +146,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
 
+                    case R.id.performance_btn:
+                        Intent intent_performance = new Intent(getApplicationContext(), PerformanceActivity.class);
+                        startActivity(intent_performance);
+                        break;
+
                     case R.id.logcat_btn:
                         Intent intent_logcat = new Intent(getApplicationContext(), LogcatMain.class);
                         startActivity(intent_logcat);
@@ -160,8 +167,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.help_btn:
-                        Intent intent = new Intent(getApplicationContext(), PerformanceActivity.class);
-                        startActivity(intent);
+
                         break;
                 }
             }
