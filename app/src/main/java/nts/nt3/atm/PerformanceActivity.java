@@ -332,12 +332,22 @@ public class PerformanceActivity extends Activity {
 		mBMemory.setText(processesMode == 0 ? getString(R.string.w_main_memory) : getString(R.string.p_cpuusage));
 
 		mToggleButton = (ToggleButton) findViewById(R.id.toggle);
+		if(ATMApplication.performanceState){
+			mToggleButton.setChecked(true);
+		}else{
+			mToggleButton.setChecked(false);
+		}
 		mToggleButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (mSR.isRecording())
+				if (mSR.isRecording()){
+					ATMApplication.performanceState = false;
 					mSR.stopRecord();
-				else mSR.startRecord();
+				} else {
+					ATMApplication.performanceState = true;
+					mSR.startRecord();
+				}
+
 				mHandlerVG.post(drawRunnableGraphic);
 			}
 		});

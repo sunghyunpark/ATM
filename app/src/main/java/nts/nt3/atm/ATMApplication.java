@@ -10,6 +10,7 @@ import android.content.pm.PackageInfo;
 public class ATMApplication extends Application {
 
     public static boolean recordState = false;
+    public static boolean performanceState = false;
     PackageInfo packageInfo;
 
     @Override
