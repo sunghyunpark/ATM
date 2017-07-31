@@ -15,7 +15,7 @@ import util.GmailAddress;
 /**
  * Created by Sunghyun on 2017. 7. 12..
  * ATM 내에서 메일 보내는 동작은 모두 여기서 하도록함.
- * mailType -> capture / record / logcat
+ * mailType -> capture / record / logcat / performance
  */
 
 public class MailPresenter implements Mailable {
@@ -62,6 +62,8 @@ public class MailPresenter implements Mailable {
                 mailTitle = "ATM_RECORD";
             }else if(mailType.equals("logcat")){
                 mailTitle = "ATM_CRASH_LOG";
+            }else if(mailType.equals("performance")){
+                mailTitle = "ATM_PERFORMANCE_RESULT";
             }
 
             if (this.isCancelled()) {

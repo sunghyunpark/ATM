@@ -50,6 +50,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import presenter.MailPresenter;
+
 public class ServiceReader extends Service {
 	
 	private boolean /*threadSuspended, */recording, firstRead = true, topRow = true;
@@ -73,6 +75,7 @@ public class ServiceReader extends Service {
 	private BufferedReader reader;
 	private BufferedWriter mW;
 	private File mFile;
+	private String mFullNamePath;
 	private SharedPreferences mPrefs;
 	private Runnable readRunnable = new Runnable() { // http://docs.oracle.com/javase/8/docs/technotes/guides/concurrency/threadPrimitiveDeprecation.html
 		@Override
@@ -462,7 +465,9 @@ public class ServiceReader extends Service {
 			
 			File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/ATM");
 			dir.mkdirs();
-			mFile = new File(dir, new StringBuilder().append(getString(R.string.app_name)).append("Record-").append(getDate()).append(".csv").toString());
+			String created_at = getDate();
+			mFullNamePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ATM/ATMRecord-"+created_at+(".csv");
+			mFile = new File(dir, new StringBuilder().append(getString(R.string.app_name)).append("Record-").append(created_at).append(".csv").toString());
 			
 			try {
 				mW = new BufferedWriter(new FileWriter(mFile));
@@ -539,6 +544,8 @@ public class ServiceReader extends Service {
 			
 			Toast.makeText(this, new StringBuilder().append(getString(R.string.app_name)).append("Record-").append(getDate()).append(".csv ")
 					.append(getString(R.string.notify_toast_saved)), Toast.LENGTH_LONG).show();
+			MailPresenter mailPresenter = new MailPresenter(getApplicationContext());
+			mailPresenter.SendBtn("performance", mFullNamePath);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Toast.makeText(this, getString(R.string.notify_toast_error) + " " + e.getMessage(), Toast.LENGTH_LONG).show();
