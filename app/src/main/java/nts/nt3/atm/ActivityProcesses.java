@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.os.Process;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
@@ -80,6 +81,9 @@ public class ActivityProcesses extends Activity {
 		final Resources res = getResources();
 		
 		mLV = (ListView) findViewById(R.id.listView);
+
+		ImageView backBtn = (ImageView)findViewById(R.id.back_btn);
+		backBtn.setOnTouchListener(myOnTouchListener);
 		
 		
 		if (Build.VERSION.SDK_INT >= 19) {
@@ -301,10 +305,6 @@ public class ActivityProcesses extends Activity {
 		}
 	}
 
-
-
-
-
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -312,12 +312,32 @@ public class ActivityProcesses extends Activity {
 	}
 
 
-
-
-
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		unregisterReceiver(receiverFinish);
 	}
+
+	/**
+	 * 각 버튼들 이벤트
+	 */
+	private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			if (event.getAction() == MotionEvent.ACTION_DOWN) {
+				v.setAlpha(0.55f);
+			}else if(event.getAction() == MotionEvent.ACTION_CANCEL){
+				v.setAlpha(1.0f);
+			} else if (event.getAction() == MotionEvent.ACTION_UP) {
+				v.setAlpha(1.0f);
+				switch(v.getId()){
+					case R.id.back_btn:
+						finish();
+						break;
+				}
+			}
+			return true;
+		}
+	};
 }
