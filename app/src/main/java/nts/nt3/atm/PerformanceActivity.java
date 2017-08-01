@@ -16,7 +16,6 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -32,7 +31,6 @@ import android.graphics.Canvas;
 import android.graphics.SurfaceTexture;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -81,7 +79,7 @@ public class PerformanceActivity extends Activity {
 	private float sD;
 	private SharedPreferences mPrefs;
 	private FrameLayout mLSettings, mLGraphicSurface, mCloseSettings;
-	private LinearLayout mLParent, mLMenu, mLProcessContainer, mLFeedback, mLWelcome,
+	private LinearLayout mLParent, mLMenu, mLProcessContainer, mLWelcome,
 			mLCPUTotal, mLCPUAM,
 			mLMemUsed, mLMemAvailable, mLMemFree, mLCached, mLThreshold;
 	private ViewGroup mTitleBar;
@@ -854,71 +852,7 @@ public class PerformanceActivity extends Activity {
 				&& !mPrefs.getBoolean(C.feedbackDone, false)) {
 			mPrefs.edit().putBoolean(C.feedbackFirstTime, false).commit();
 			ViewStub v = (ViewStub) findViewById(R.id.VSFeedback);
-			if (v != null) { // This is to avoid a null pointer when the second time this code is executed (findViewById() returns the view only once)
-				mLFeedback = (LinearLayout) v.inflate();
 
-				int bottomMargin = 0;
-				if (Build.VERSION.SDK_INT >= 19)
-					bottomMargin = navigationBarHeight;
-				((FrameLayout.LayoutParams) mLFeedback.getLayoutParams()).setMargins(0, 0, 0, (int)(35*sD) + bottomMargin);
-
-				(mLFeedback.findViewById(R.id.BFeedbackYes)).setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						mPrefs.edit().putBoolean(C.feedbackDone, true).commit();
-						try {
-							startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(C.marketDetails + getPackageName()))
-									.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_MULTIPLE_TASK));
-						} catch (ActivityNotFoundException e) {
-							e.printStackTrace();
-
-						}
-						mLFeedback.animate().setDuration(animDuration).setListener(new AnimatorListenerAdapter() {
-							@Override
-							public void onAnimationEnd(Animator animation) {
-								((ViewManager) mLFeedback.getParent()).removeView(mLFeedback);
-								mLFeedback = null;
-							}
-						}).setStartDelay(0).alpha(0).translationYBy(-15*sD);
-					}
-				});
-				(mLFeedback.findViewById(R.id.BFeedbackDone)).setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						mPrefs.edit().putBoolean(C.feedbackDone, true).commit();
-						Toast.makeText(PerformanceActivity.this, getString(R.string.w_main_feedback_done_thanks), Toast.LENGTH_SHORT).show();
-						mLFeedback.animate().setDuration(animDuration).setListener(new AnimatorListenerAdapter() {
-							@Override
-							public void onAnimationEnd(Animator animation) {
-								((ViewManager) mLFeedback.getParent()).removeView(mLFeedback);
-								mLFeedback = null;
-							}
-						}).setStartDelay(0).alpha(0).translationYBy(-15*sD);
-					}
-				});
-				(mLFeedback.findViewById(R.id.BFeedbackNo)).setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						mLFeedback.animate().setDuration(animDuration).setListener(new AnimatorListenerAdapter() {
-							@Override
-							public void onAnimationEnd(Animator animation) {
-								((ViewManager) mLFeedback.getParent()).removeView(mLFeedback);
-								mLFeedback = null;
-							}
-						}).setStartDelay(0).alpha(0).translationYBy(-15*sD);
-						mPrefs.edit().putLong(C.welcomeDate, Calendar.getInstance(TimeZone.getTimeZone(C.europeLondon)).getTimeInMillis()).commit();
-						Toast.makeText(PerformanceActivity.this, getString(R.string.w_main_feedback_no_remind), Toast.LENGTH_LONG).show();
-					}
-				});
-
-				int animDur = animDuration;
-				int delayDur = 1000;
-				if (orientationChanged) {
-					animDur = 0;
-					delayDur = 0;
-				}
-				mLFeedback.animate().setStartDelay(delayDur).setDuration(animDur).alpha(1).translationYBy(15*sD);
-			}
 		}
 	}
 
@@ -1389,18 +1323,6 @@ public class PerformanceActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		if (mLFeedback != null && mLFeedback.getAlpha() != 0) {
-			mPrefs.edit().putLong(C.welcomeDate, Calendar.getInstance(TimeZone.getTimeZone(C.europeLondon)).getTimeInMillis()).commit();
-			Toast.makeText(PerformanceActivity.this, getString(R.string.w_main_feedback_no_remind), Toast.LENGTH_LONG).show();
-			mLFeedback.animate().setDuration(animDuration).setListener(new AnimatorListenerAdapter() {
-				@Override
-				public void onAnimationEnd(Animator animation) {
-					((ViewManager) mLFeedback.getParent()).removeView(mLFeedback);
-					mLFeedback = null;
-				}
-			}).setStartDelay(0).alpha(0).translationYBy(-15*sD);
-			return;
-		}
 		if (mLWelcome != null && mLWelcome.getAlpha() != 0) {
 			mPrefs.edit().putBoolean(C.welcome, false).commit();
 			mLWelcome.animate().setDuration(animDuration).setListener(new AnimatorListenerAdapter() {
