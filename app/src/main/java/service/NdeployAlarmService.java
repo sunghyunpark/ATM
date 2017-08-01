@@ -122,7 +122,7 @@ public class NdeployAlarmService extends Service {
                 .setTicker(res.getString(R.string.ndeploy_alarm_push_txt2));
         Notification notification = builder.build();
         notification.flags = notification.flags | notification.FLAG_AUTO_CANCEL;
-        nm.notify(1234, notification);
+        nm.notify(0, notification);
     }
 
     private void ParsingTimer(final String url){
