@@ -67,6 +67,7 @@ public class ScreenCaptureActivity extends Activity {
 
     Realm mRealm;
     RealmConfig realmConfig;
+    private String flag;    //캡쳐인 경우 -> capture, 매크로인 경우 -> macro
 
 
     private class ImageAvailableListener implements ImageReader.OnImageAvailableListener {
@@ -95,14 +96,20 @@ public class ScreenCaptureActivity extends Activity {
                     fos = new FileOutputStream(fullPath);
                     bitmap.compress(CompressFormat.JPEG, 100, fos);
 
-                    User user_db = mRealm.where(User.class).equalTo("no",1).findFirst();
-                    if(user_db.isSend_capture_without_edit()){
-                        //편집 없이 바로 보내는 경우
-                        MailPresenter mailPresenter = new MailPresenter(getApplicationContext());
-                        mailPresenter.SendBtn("capture", fullPath);
-                    }else{
-                        //로컬 저장소에 캡쳐를 저장한 후 편집화면으로 해당 경로를 넘겨줌.
-                        Intent intent = new Intent(getApplicationContext(), EditCaptureActivity.class);
+                    if(flag.equals("capture")){    //과업이 캡쳐인 경우
+                        User user_db = mRealm.where(User.class).equalTo("no",1).findFirst();
+                        if(user_db.isSend_capture_without_edit()){
+                            //편집 없이 바로 보내는 경우
+                            MailPresenter mailPresenter = new MailPresenter(getApplicationContext());
+                            mailPresenter.SendBtn("capture", fullPath);
+                        }else{
+                            //로컬 저장소에 캡쳐를 저장한 후 편집화면으로 해당 경로를 넘겨줌.
+                            Intent intent = new Intent(getApplicationContext(), EditCaptureActivity.class);
+                            intent.putExtra("ImgFullPath", fullPath);
+                            startActivity(intent);
+                        }
+                    }else{    //과업이 매크로인경우
+                        Intent intent = new Intent(getApplicationContext(), MacroActivity.class);
                         intent.putExtra("ImgFullPath", fullPath);
                         startActivity(intent);
                     }
@@ -176,6 +183,9 @@ public class ScreenCaptureActivity extends Activity {
 
         realmConfig = new RealmConfig();
         mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
+
+        Intent intent = getIntent();
+        flag = intent.getExtras().getString("flag");
 
 
         // call for the projection manager

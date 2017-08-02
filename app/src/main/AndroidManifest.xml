@@ -71,9 +71,13 @@
             android:name=".ServiceReader"
             android:enabled="true"
             android:exported="true" />
-        <activity android:name=".MemoActivity"/>
+
+        <activity android:name=".MemoActivity" />
         <activity android:name=".PerformanceActivity" />
         <activity android:name=".ActivityProcesses" />
+        <activity android:name=".MacroActivity" />
+        <activity android:name=".MacroMenuDialog"
+            android:theme="@android:style/Theme.Dialog"></activity>
     </application>
 
 </manifest>

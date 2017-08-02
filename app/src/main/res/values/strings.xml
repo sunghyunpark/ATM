@@ -17,7 +17,7 @@
     <string name="wheel_view_item4">로그캣</string>
     <string name="wheel_view_item5">앱관리</string>
     <string name="wheel_view_item6">홈</string>
-    <string name="wheel_view_item7">AUTO</string>
+    <string name="wheel_view_item7">매크로</string>
     <string name="wheel_view_item8">성능 측정</string>
     <string name="wheel_view_item9">숨기기</string>
 
@@ -125,7 +125,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
 
     <string name="performance_activity_title">측정</string>
@@ -237,5 +236,10 @@
     <string name="p_percentage">-%</string>
     <string name="cd_paramter_status_icon">Parameter status icon</string>
     <string name="content_description_logo_app">Logo app</string>
+
+    <!--Macro Menu -->
+    <string name="macro_menu_dialog_btn1">초기화</string>
+    <string name="macro_menu_dialog_btn2">롱탭</string>
+    <string name="macro_menu_dialog_btn3">드래그</string>
 
 </resources>

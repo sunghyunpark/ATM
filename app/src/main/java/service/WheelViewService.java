@@ -23,14 +23,14 @@ import com.lukedeighton.wheelview.WheelView;
 import com.lukedeighton.wheelview.adapter.WheelAdapter;
 
 import logcat.LogcatMain;
+import nts.nt3.atm.ATMApplication;
 import nts.nt3.atm.ApkMangerActivity;
+import nts.nt3.atm.MainActivity;
 import nts.nt3.atm.MemoActivity;
 import nts.nt3.atm.PerformanceActivity;
+import nts.nt3.atm.R;
 import nts.nt3.atm.ScreenCaptureActivity;
 import nts.nt3.atm.ScreenRecordActivity;
-import nts.nt3.atm.ATMApplication;
-import nts.nt3.atm.MainActivity;
-import nts.nt3.atm.R;
 
 /**
  * Created by NAVER on 2017-07-06.
@@ -153,6 +153,7 @@ public class WheelViewService extends Service implements Wheelable{
                     try {
                         Thread.sleep(1000);
                         Intent intent = new Intent(getApplicationContext(), ScreenCaptureActivity.class);
+                        intent.putExtra("flag", "capture");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }catch (InterruptedException e){
@@ -210,8 +211,12 @@ public class WheelViewService extends Service implements Wheelable{
     }
     //auto
     @Override
-    public void startAuto(){
-        Toast.makeText(getApplicationContext(), "startAuto", Toast.LENGTH_SHORT).show();
+    public void startMacro(){
+        stopService();
+        Intent intent = new Intent(getApplicationContext(), ScreenCaptureActivity.class);
+        intent.putExtra("flag", "macro");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
     //performance
     @Override
@@ -323,7 +328,7 @@ public class WheelViewService extends Service implements Wheelable{
                     startHome();
                     break;
                 case 6:
-                    startAuto();
+                    startMacro();
                     break;
                 case 7:
                     startPerformance();

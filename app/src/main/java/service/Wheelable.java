@@ -12,7 +12,7 @@ public interface Wheelable {
     void startLogCat();    // 로그캣
     void startManageApp();    // 앱 관리
     void startHome();    // 홈 화면
-    void startAuto();    // 매크로
+    void startMacro();    // 매크로
     void startPerformance();    //성능측정
     void stopService();    // 숨기기
 }
