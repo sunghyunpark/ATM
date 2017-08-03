@@ -212,11 +212,16 @@ public class WheelViewService extends Service implements Wheelable{
     //auto
     @Override
     public void startMacro(){
-        stopService();
-        Intent intent = new Intent(getApplicationContext(), ScreenCaptureActivity.class);
-        intent.putExtra("flag", "macro");
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            //사용가능한 버전이 아님
+            Toast.makeText(getApplicationContext(),"Lollipop(5.0)이상만 가능합니다.", Toast.LENGTH_SHORT).show();
+        }else{
+            stopService();
+            Intent intent = new Intent(getApplicationContext(), ScreenCaptureActivity.class);
+            intent.putExtra("flag", "macro");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
     //performance
     @Override
