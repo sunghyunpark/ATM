@@ -36,8 +36,8 @@
 
         <activity
             android:name=".EditCaptureActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ScreenRecordActivity"
@@ -76,10 +76,13 @@
         <activity android:name=".MemoActivity" />
         <activity android:name=".PerformanceActivity" />
         <activity android:name=".ActivityProcesses" />
-        <activity android:name=".MacroActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".MacroMenuDialog"
-            android:theme="@android:style/Theme.Dialog"></activity>
+        <activity
+            android:name=".MacroActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".MacroMenuDialog"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity android:name=".MemoViewerActivity"></activity>
     </application>
 
 </manifest>

@@ -242,4 +242,8 @@
     <string name="macro_menu_dialog_btn2">롱탭</string>
     <string name="macro_menu_dialog_btn3">드래그</string>
 
+    <!--MemoViewerActivity-->
+    <string name="memo_view_activity_title">메모</string>
+    <string name="memo_view_activity_edit_btn">수정</string>
+
 </resources>

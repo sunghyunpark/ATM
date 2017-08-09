@@ -123,12 +123,19 @@ public class MemoActivity extends AppCompatActivity {
                 VHitem.item_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), MemoViewerActivity.class);
+                        intent.putExtra("no", currentItem.getNo());
+                        intent.putExtra("MemoTitle", currentItem.getMemoTitle());
+                        intent.putExtra("MemoContent", currentItem.getMemoContents());
+                        intent.putExtra("created_at", currentItem.getCreated_at());
+                        startActivity(intent);
+                        /*
                         Intent intent = new Intent(getApplicationContext(), WriteActivity.class);
                         intent.putExtra("flag", "EditMemo");
                         intent.putExtra("no", currentItem.getNo());
                         intent.putExtra("EditTitle", currentItem.getMemoTitle());
                         intent.putExtra("EditContent", currentItem.getMemoContents());
-                        startActivity(intent);
+                        startActivity(intent);*/
                     }
                 });
                 VHitem.memo_title_txt.setText(currentItem.getMemoTitle());
