@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"
-                android:paddingRight="150dp"
+                android:paddingRight="80dp"
                 android:text="@string/setting_activity_alarm_ndeploy"/>
             <Switch
                 android:id="@+id/ndeploy_switch"
@@ -198,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"
-                android:paddingRight="150dp"
+                android:paddingRight="80dp"
                 android:text="@string/setting_activity_send_capture_without_edit_txt"/>
             <Switch
                 android:id="@+id/send_capture_without_edit_switch"
