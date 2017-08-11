@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 import realm.model.DownLoadLink;
 import realm.model.Memo;
 
@@ -79,6 +80,25 @@ public class WritePresenter implements Writeable{
             memo.setCreated_at(created_at);
             mRealm.commitTransaction();
         }
+    }
+
+    /**
+     *
+     * @param mRealm
+     * @param flag Link / Memo
+     * @param no
+     */
+    @Override
+    public void Delete(Realm mRealm, String flag, int no){
+        mRealm.beginTransaction();
+        if(flag.equals("Link")){
+            RealmResults<DownLoadLink> linkList = mRealm.where(DownLoadLink.class).findAll();
+            linkList.deleteFromRealm(no);
+        }else if(flag.equals("Memo")){
+            RealmResults<Memo> memoList = mRealm.where(Memo.class).findAll();
+            memoList.deleteFromRealm(no);
+        }
+        mRealm.commitTransaction();
     }
 
 }

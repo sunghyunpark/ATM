@@ -1,5 +1,7 @@
 package nts.nt3.atm;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import model.MemoModel;
+import presenter.WritePresenter;
 import realm.RealmConfig;
 import realm.model.Memo;
 
@@ -31,6 +34,7 @@ public class MemoActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     private ArrayList<MemoModel> listItems;
+    TextView empty_txt;    //비어있을 때 문구
 
     @Override
     public void onResume(){
@@ -68,7 +72,7 @@ public class MemoActivity extends AppCompatActivity {
     private void SetList(){
         listItems = new ArrayList<MemoModel>();
         RealmResults<Memo> dataList = mRealm.where(Memo.class).findAll();
-        TextView empty_txt = (TextView)findViewById(R.id.empty_txt);
+        empty_txt = (TextView)findViewById(R.id.empty_txt);
 
         int dataSize = dataList.size();
         if(dataSize > 0){
@@ -129,13 +133,29 @@ public class MemoActivity extends AppCompatActivity {
                         intent.putExtra("MemoContent", currentItem.getMemoContents());
                         intent.putExtra("created_at", currentItem.getCreated_at());
                         startActivity(intent);
-                        /*
-                        Intent intent = new Intent(getApplicationContext(), WriteActivity.class);
-                        intent.putExtra("flag", "EditMemo");
-                        intent.putExtra("no", currentItem.getNo());
-                        intent.putExtra("EditTitle", currentItem.getMemoTitle());
-                        intent.putExtra("EditContent", currentItem.getMemoContents());
-                        startActivity(intent);*/
+                    }
+                });
+                VHitem.item_layout.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        AlertDialog.Builder alert = new AlertDialog.Builder(MemoActivity.this);
+                        alert.setTitle("삭제");
+                        alert.setMessage("삭제하시겠습니까?");
+                        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                removeItem(position);
+                            }
+                        });
+                        alert.setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        // Canceled.
+
+                                    }
+                                });
+                        alert.show();
+                        return false;
                     }
                 });
                 VHitem.memo_title_txt.setText(currentItem.getMemoTitle());
@@ -157,6 +177,17 @@ public class MemoActivity extends AppCompatActivity {
                 memo_contents_txt = (TextView)itemView.findViewById(R.id.memo_contents_txt);
                 created_at = (TextView)itemView.findViewById(R.id.created_at);
             }
+        }
+
+        private void removeItem(int position){
+            listItems.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, listItems.size());
+            if(listItems.size() == 0){
+                empty_txt.setVisibility(View.VISIBLE);
+            }
+            WritePresenter writePresenter = new WritePresenter();
+            writePresenter.Delete(mRealm, "Memo", position);
         }
 
         private boolean isPositionHeader(int position) {
