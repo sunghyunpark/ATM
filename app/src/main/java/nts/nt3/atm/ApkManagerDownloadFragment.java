@@ -1,7 +1,9 @@
 package nts.nt3.atm;
 
 
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import model.DownLinkModel;
+import presenter.WritePresenter;
 import realm.RealmConfig;
 import realm.model.DownLoadLink;
 
@@ -39,6 +42,7 @@ public class ApkManagerDownloadFragment extends Fragment {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     private ArrayList<DownLinkModel> listItems;
+    TextView empty_txt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +78,7 @@ public class ApkManagerDownloadFragment extends Fragment {
     private void SetList(){
         listItems = new ArrayList<DownLinkModel>();
         RealmResults<DownLoadLink> dataList = mRealm.where(DownLoadLink.class).findAll();
-        TextView empty_txt = (TextView)v.findViewById(R.id.empty_txt);
+        empty_txt = (TextView)v.findViewById(R.id.empty_txt);
 
         int dataSize = dataList.size();
         if(dataSize > 0){
@@ -150,6 +154,29 @@ public class ApkManagerDownloadFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
+                VHitem.item_layout.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                        alert.setTitle("삭제");
+                        alert.setMessage("삭제하시겠습니까?");
+                        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                removeItem(position);
+                            }
+                        });
+                        alert.setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        // Canceled.
+
+                                    }
+                                });
+                        alert.show();
+                        return false;
+                    }
+                });
 
             }
         }
@@ -167,6 +194,16 @@ public class ApkManagerDownloadFragment extends Fragment {
                 linkTitle = (TextView)itemView.findViewById(R.id.link_title_txt);
                 download_btn = (ImageView)itemView.findViewById(R.id.download_btn);
             }
+        }
+        private void removeItem(int position){
+            listItems.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, listItems.size());
+            if(listItems.size() == 0){
+                empty_txt.setVisibility(View.VISIBLE);
+            }
+            WritePresenter writePresenter = new WritePresenter();
+            writePresenter.Delete(mRealm, "Link", position);
         }
 
         private boolean isPositionHeader(int position) {
