@@ -225,15 +225,21 @@ public class MemoActivity extends AppCompatActivity {
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
-                int count = Integer.parseInt(value);
-                if (count > 10000) {
-                    Toast.makeText(getApplicationContext(), "10000자까지만 가능합니다.", Toast.LENGTH_SHORT).show();
-                } else {
-                    String test_txt = MakeDummyData(count);
-                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    android.content.ClipData clip = android.content.ClipData.newPlainText("LABEL", test_txt);
-                    clipboard.setPrimaryClip(clip);
-                    Toast.makeText(getApplicationContext(), "클립보드에 복사했습니다.", Toast.LENGTH_SHORT).show();
+                value = value.trim();
+                int count = 0;
+                if(value.equals("")){
+                    Toast.makeText(getApplicationContext(),"생성할 데이터의 갯수를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }else{
+                    count = Integer.parseInt(value);
+                    if (count > 10000) {
+                        Toast.makeText(getApplicationContext(), "10000자까지만 가능합니다.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String test_txt = MakeDummyData(count);
+                        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                        android.content.ClipData clip = android.content.ClipData.newPlainText("LABEL", test_txt);
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(getApplicationContext(), "클립보드에 복사했습니다.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
