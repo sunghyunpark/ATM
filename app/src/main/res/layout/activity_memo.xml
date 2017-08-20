@@ -35,6 +35,15 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
             android:src="@mipmap/write_img"/>
+
+        <ImageView
+            android:id="@+id/dummy_data_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toLeftOf="@+id/write_memo_btn"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/dummy_data_btn_img"
+            android:layout_marginRight="20dp"/>
     </RelativeLayout>
     <!--구분선-->
     <LinearLayout

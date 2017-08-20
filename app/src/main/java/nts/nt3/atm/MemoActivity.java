@@ -1,6 +1,7 @@
 package nts.nt3.atm;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,15 +9,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -67,6 +72,9 @@ public class MemoActivity extends AppCompatActivity {
 
         ImageView backBtn = (ImageView)findViewById(R.id.back_btn);
         backBtn.setOnTouchListener(myOnTouchListener);
+
+        ImageView dummyDataBtn = (ImageView)findViewById(R.id.dummy_data_btn);
+        dummyDataBtn.setOnTouchListener(myOnTouchListener);
     }
 
     private void SetList(){
@@ -204,6 +212,56 @@ public class MemoActivity extends AppCompatActivity {
         }
     }
 
+    private void DummyDataDialog(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(MemoActivity.this);
+        alert.setTitle("텍스트 생성");
+        alert.setMessage("생성할 텍스트의 길이 수를 입력하세요.(최대 10000자)");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(MemoActivity.this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                int count = Integer.parseInt(value);
+                if (count > 10000) {
+                    Toast.makeText(getApplicationContext(), "10000자까지만 가능합니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    String test_txt = MakeDummyData(count);
+                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    android.content.ClipData clip = android.content.ClipData.newPlainText("LABEL", test_txt);
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(getApplicationContext(), "클립보드에 복사했습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                    }
+                });
+
+        alert.show();
+    }
+
+    //데이터 생성
+    private String MakeDummyData(int num){
+        StringBuilder buffer = new StringBuilder();
+        Random random = new Random();
+
+        String chars[] = ("A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9,가,나,다,라,마,바,사," +
+                "아,자,차,카,타,파,하").split(",");
+
+        for (int i = 0; i < num; i++) {
+            buffer.append(chars[random.nextInt(chars.length)]);
+        }
+        return buffer.toString();
+    }
+
     /**
      * 각 버튼들 이벤트
      */
@@ -226,6 +284,9 @@ public class MemoActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), WriteActivity.class);
                         intent.putExtra("flag", "Memo");
                         startActivity(intent);
+                        break;
+                    case R.id.dummy_data_btn:
+                        DummyDataDialog();
                         break;
 
                 }
