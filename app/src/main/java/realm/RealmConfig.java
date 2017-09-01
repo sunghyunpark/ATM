@@ -17,8 +17,8 @@ public class RealmConfig{
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("User.realm")
                 .schemaVersion(1)
-                .deleteRealmIfMigrationNeeded()
-                //.migration(new Migration())
+                //.deleteRealmIfMigrationNeeded()
+                .migration(new Migration())
                 .build();
 
         return config;
@@ -31,8 +31,8 @@ public class RealmConfig{
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("DownLoadLink.realm")
                 .schemaVersion(1)
-                .deleteRealmIfMigrationNeeded()
-                //.migration(new Migration())
+                //.deleteRealmIfMigrationNeeded()
+                .migration(new Migration())
                 .build();
 
         return config;
@@ -45,8 +45,8 @@ public class RealmConfig{
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("Memo.realm")
                 .schemaVersion(1)
-                .deleteRealmIfMigrationNeeded()
-                //.migration(new Migration())
+                //.deleteRealmIfMigrationNeeded()
+                .migration(new Migration())
                 .build();
 
         return config;

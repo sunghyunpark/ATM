@@ -1,11 +1,7 @@
 package realm;
 
-import android.util.Log;
-
 import io.realm.DynamicRealm;
-import io.realm.FieldAttribute;
 import io.realm.RealmMigration;
-import io.realm.RealmObjectSchema;
 import io.realm.RealmSchema;
 
 /**
@@ -49,18 +45,19 @@ public class Migration implements RealmMigration {
          int age;
          ************************************************/
         // Migrate from version 0 to version 1
+        /*
         if (oldVersion == 0) {
-            RealmObjectSchema personSchema = schema.get("UserData");
+            RealmObjectSchema userSchema = schema.get("User");
 
             // Combine 'firstName' and 'lastName' in a new field called 'fullName'
             try {
-                if(!personSchema.hasField("bg_title")){
-                    personSchema.addField("bg_title", String.class, FieldAttribute.REQUIRED);
+                if(!userSchema.hasField("bg_title")){
+                    userSchema.addField("bg_title", String.class, FieldAttribute.REQUIRED);
                 }
             }catch (IllegalArgumentException e){
                 Log.e("Realm_Error", e.getMessage());
             }
             oldVersion++;
-        }
+        }*/
     }
 }
