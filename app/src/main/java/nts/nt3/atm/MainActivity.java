@@ -22,6 +22,7 @@ import realm.model.User;
 import service.WheelViewService;
 
 /**
+ * https://github.com/sunghyunpark/ATM
  * 1. git init
  * 2. git status
  * 3. git commit -am "commit"
